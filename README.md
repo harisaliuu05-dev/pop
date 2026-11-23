@@ -30,7 +30,7 @@ Replace `www/index.html` with the new game file (same name) and upload it. The b
 - **Save backup.** The save is copied into Android's app storage, which Android Backup sends to the player's Google account. On a new phone or after a reinstall the save comes back.
 - **Notifications.** When the player leaves, reminders are scheduled for 2 hours, 1 day and 3 days later. They are cancelled when the player comes back.
 - **Rewarded ads.** AdMob. Until you add your own ids it shows Google's test ads, so it is safe to try.
-- **Purchases.** Google Play Billing for the 8-Bit Retro Pack (`retro_pack_8bit`), No Ads (`no_ads`) and the diamond packs (`gems_80`, `gems_450`, `gems_1000`, `gems_2600`). The Restore button gives back one-time purchases.
+- **Purchases.** Google Play Billing for the 8-Bit Retro Pack (`retro_pack_8bit`), No Ads (`no_ads`), the three theme sets and the diamond packs (`gems_80`, `gems_450`, `gems_1000`, `gems_2600`). The Restore button gives back one-time purchases.
 
 All of this lives in `www/bridge.js` and only runs inside the app. In a normal browser the game stays in test mode.
 
@@ -40,6 +40,7 @@ All of this lives in `www/bridge.js` and only runs inside the app. In a normal b
 2. **Google Play Console** ($25 one-time, play.google.com/console). Create the app, turn on Play App Signing, and upload `app-release.aab` to **Internal testing** first.
 3. **In-app products.** In Play Console, under Monetize, create these products with these exact ids:
    - one-time, non-consumable: `retro_pack_8bit` ($2.99), `no_ads` ($4.99)
+   - one-time, non-consumable theme sets: `set_candy`, `set_glass`, `set_sky` ($1.99 each) and their welcome versions `set_candy_welcome`, `set_glass_welcome`, `set_sky_welcome` ($0.99 each, shown only for a player's first set)
    - consumable: `gems_80` ($0.99), `gems_450` ($4.99), `gems_1000` ($9.99), `gems_2600` ($24.99)
 4. **AdMob** (admob.google.com). Add the app and make one **Rewarded** ad unit. Then add two repository variables (Settings, then Secrets and variables, then Actions, then Variables): `ADMOB_APP_ID` (looks like `ca-app-pub-…~…`) and `ADMOB_REWARDED_ID` (looks like `ca-app-pub-…/…`). Real ads switch on with the next build.
 5. **Store listing.** Fill in the description, screenshots, content rating, the data safety form (the app shows ads and has purchases, and stores no personal data), and the privacy policy link: `https://github.com/harisaliuu05-dev/pop/blob/main/PRIVACY.md`.

@@ -82,7 +82,7 @@
     var Cdv = window.CdvPurchase;
     if (!Cdv) return;
     var store = Cdv.store, GP = Cdv.Platform.GOOGLE_PLAY, PT = Cdv.ProductType;
-    var ONCE = ['retro_pack_8bit', 'no_ads'], GEMS = ['gems_80', 'gems_450', 'gems_1000', 'gems_2600'];
+    var ONCE = ['retro_pack_8bit', 'no_ads', 'set_candy', 'set_glass', 'set_sky', 'set_candy_welcome', 'set_glass_welcome', 'set_sky_welcome'], GEMS = ['gems_80', 'gems_450', 'gems_1000', 'gems_2600'];
     store.register(ONCE.map(function (id) { return { id: id, type: PT.NON_CONSUMABLE, platform: GP }; })
       .concat(GEMS.map(function (id) { return { id: id, type: PT.CONSUMABLE, platform: GP }; })));
     var pending = {}, granted = {};

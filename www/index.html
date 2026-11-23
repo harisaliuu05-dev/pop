@@ -44,14 +44,14 @@
     --bg:#0b0a14;--card:#171627;--label:#f4f2fb;--label2:rgba(228,225,245,.64);--label3:rgba(228,225,245,.32);
     --sep:rgba(228,225,245,.16);--fill:rgba(160,155,200,.2);--fill2:rgba(160,155,200,.3);--thumb:#4b4969;
     --tint:#ff7a45;--on-tint:#1b0c05;--tint-soft:rgba(255,122,69,.16);--good:#38d65c;--good-soft:rgba(56,214,92,.16);
-    --bad:#ff5a50;--gold:#ffc83d;--gem:#62c3ff;--glass:rgba(14,13,24,.72);--scrim:rgba(0,0,0,.6);color-scheme:dark;
+    --bad:#ff5a50;--gold:#ffc83d;--gem:#62c3ff;--glass:rgba(14,13,24,.94);--scrim:rgba(0,0,0,.6);color-scheme:dark;
   }
 }
 :root,:root[data-theme]{
   --bg:#0b0a14;--card:#171627;--label:#f4f2fb;--label2:rgba(228,225,245,.64);--label3:rgba(228,225,245,.32);
   --sep:rgba(228,225,245,.16);--fill:rgba(160,155,200,.2);--fill2:rgba(160,155,200,.3);--thumb:#4b4969;
   --tint:#ff7a45;--on-tint:#1b0c05;--tint-soft:rgba(255,122,69,.16);--good:#38d65c;--good-soft:rgba(56,214,92,.16);
-  --bad:#ff5a50;--gold:#ffc83d;--gem:#62c3ff;--glass:rgba(14,13,24,.72);--scrim:rgba(0,0,0,.6);color-scheme:dark;
+  --bad:#ff5a50;--gold:#ffc83d;--gem:#62c3ff;--glass:rgba(14,13,24,.94);--scrim:rgba(0,0,0,.6);color-scheme:dark;
 }
 
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
@@ -90,7 +90,7 @@ h1,h2,p{margin:0}
 .map .tint{display:none;position:absolute;inset:0;z-index:2;pointer-events:none;border-radius:20px;opacity:0;background:#ffd9a0}
 .page{position:relative;z-index:1}
 @media (prefers-reduced-motion:reduce){.sky .st::before,.sky .st::after,.sky i{animation:none}}
-.glass{background:var(--glass);-webkit-backdrop-filter:saturate(180%) blur(22px);backdrop-filter:saturate(180%) blur(22px)}
+.glass{background:var(--glass)}
 .hdr{position:fixed;top:0;left:0;right:0;z-index:20;padding-top:env(safe-area-inset-top,0px);border-bottom:var(--hair) solid var(--sep)}
 .hdr-in{height:var(--hdr-h);max-width:600px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:12px;
   padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
@@ -184,11 +184,11 @@ h1,h2,p{margin:0}
 .bs .dk{fill:rgba(0,0,0,.3)}
 .bs .lt{fill:rgba(255,255,255,.22)}
 .bs .smk{fill:#fff;opacity:0}
-.lm.busy .bs .smk{animation:smk 3s ease-out infinite}
+.lm.busy .bs .smk{animation:smk 3s steps(5) infinite}
 @keyframes smk{0%{transform:translateY(2px);opacity:.65}100%{transform:translateY(-9px);opacity:0}}
 @media (prefers-reduced-motion:reduce){.lm.busy .bs .smk{animation:none;opacity:.5}}
-.stm{animation:smk 3s ease-out infinite}
-.wheel{animation:spin 90s linear infinite}
+.stm{animation:smk 3s steps(5) infinite}
+.wheel{animation:spin 90s steps(90) infinite}
 @keyframes spin{to{transform:rotate(360deg)}}
 .aur{opacity:.85}
 @keyframes aur{from{opacity:.5}to{opacity:1}}
@@ -197,14 +197,14 @@ h1,h2,p{margin:0}
 @media (prefers-reduced-motion:reduce){.stm,.wheel,.aur{animation:none}.skater{display:none}}
 .cafe{display:none}
 .lm.on .cafe{display:block}
-.cafe .pr{animation:sip 2.6s ease-in-out infinite}
+.cafe .pr{animation:sip 2.6s steps(4) infinite}
 @keyframes sip{0%,100%{transform:translateY(0)}50%{transform:translateY(-.7px)}}
 @media (prefers-reduced-motion:reduce){.cafe .pr{animation:none}}
 .lm.on .win{fill:#ffd98a;filter:drop-shadow(0 0 4px rgba(255,200,100,.85))}
 .lm.on .door{fill:#ffcf7a}
 .lm.mg .mg{display:inline}
 .lm:not(.on) .bs{filter:grayscale(1) brightness(.42)}
-.lm.busy .sign{animation:bob .9s ease-in-out infinite}
+.lm.busy .sign{animation:bob .9s steps(2,jump-none) infinite}
 @keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-2px)}}
 .cb{display:none;position:absolute;top:3.5cqw;right:-.5cqw;min-width:6cqw;height:6cqw;padding:0 1.4cqw;border-radius:3cqw;
   background:#ffcf5c;color:#2a1a05;font-size:3.3cqw;font-weight:800;line-height:6cqw;text-align:center;box-shadow:0 0 0 .5cqw #16112f}
@@ -274,7 +274,7 @@ h1,h2,p{margin:0}
 .barrow{grid-area:bar;display:flex;align-items:center;gap:10px}
 .track{position:relative;flex:1;height:10px;border-radius:5px;background:var(--fill);overflow:hidden}
 .fill{position:absolute;inset:0;border-radius:5px;background:linear-gradient(90deg,var(--c1),var(--c2));transform:translateX(-100%);will-change:transform}
-.track.fast .fill{background:repeating-linear-gradient(90deg,var(--c1) 0 12px,var(--c2) 12px 24px);background-size:24px 100%;animation:stripes .7s linear infinite}
+.track.fast .fill{background:repeating-linear-gradient(90deg,var(--c1) 0 12px,var(--c2) 12px 24px);background-size:24px 100%}
 @keyframes stripes{to{background-position:24px 0}}
 .tm{flex:none;min-width:48px;text-align:right;font-size:12.5px;font-weight:700;color:var(--label2)}
 .mile{grid-area:mile;display:flex;align-items:center;justify-content:space-between;gap:10px;font-size:12px;font-weight:600;color:var(--label2)}
@@ -500,6 +500,124 @@ button.pill:active{transform:scale(.94)}
 .tmap.th-harbor{background:linear-gradient(180deg,#0b1f4a 0%,#14538a 60%,#0a2f52 100%)}
 .tmap.th-frost{background:linear-gradient(180deg,#1d2362 0%,#4a5ea8 55%,#9fb4e6 100%)}
 .tmap.th-frost .twt i,.tmap.th-frost .twt em{color:rgba(235,242,255,.85)}
+
+/* The Lantern Map story */
+.saga{position:fixed;inset:0;z-index:62;display:flex;align-items:flex-end;justify-content:center;background:rgba(6,3,18,.72);opacity:0;transition:opacity .25s ease;
+  padding:calc(env(safe-area-inset-top,0px) + 12px) max(10px,env(safe-area-inset-right,0px)) calc(env(safe-area-inset-bottom,0px) + 10px) max(10px,env(safe-area-inset-left,0px))}
+.saga.on{opacity:1}
+.sgc0{width:100%;max-width:520px;max-height:100%;display:flex;flex-direction:column;border-radius:24px;overflow:hidden;background:#15102a;color:#f4f0ff;box-shadow:0 20px 60px rgba(0,0,0,.5);
+  transform:translateY(30px);transition:transform .35s cubic-bezier(.2,.9,.25,1.05)}
+.saga.on .sgc0{transform:none}
+.sgban{position:relative;height:118px;flex:none;overflow:hidden}
+.sgban svg{position:absolute;inset:0;width:100%;height:100%}
+.saga.th-lane .sgban{background:linear-gradient(180deg,#3b1450,#7a2a44)}
+.saga.th-harbor .sgban{background:linear-gradient(180deg,#0b1f4a,#14538a)}
+.saga.th-frost .sgban{background:linear-gradient(180deg,#1d2362,#4a5ea8)}
+.saga.th-tokyo .sgban{background:linear-gradient(180deg,#160a2e,#5a1a5a)}
+.sgh{position:absolute;left:16px;right:70px;bottom:12px;text-shadow:0 2px 8px rgba(0,0,0,.6)}
+.sgh i{display:block;font-style:normal;font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,236,200,.85)}
+.sgh h2{margin:2px 0 0;font-size:23px;line-height:1.1;font-weight:800;letter-spacing:-.01em;text-wrap:balance}
+.sgskip{position:absolute;top:10px;right:10px;border:0;border-radius:999px;padding:6px 12px;font:600 13px/1 inherit;background:rgba(10,5,30,.5);color:#fff}
+.sgbody{flex:1;min-height:0;overflow-y:auto;padding:14px 14px 4px;display:flex;flex-direction:column;gap:10px;overscroll-behavior:contain}
+.sgbody>*{flex:none}
+.sgban::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(21,16,42,0) 20%,rgba(21,16,42,.55) 60%,#15102a 100%)}
+.sgh,.sgskip{z-index:1}
+.sgl{opacity:0;transform:translateY(8px);transition:opacity .3s ease,transform .3s ease;display:none}
+.sgl.on{display:flex;opacity:1;transform:none}
+.sgs{align-items:flex-end;gap:9px}
+.sgp{flex:none;width:46px;height:46px;border-radius:50%;background:linear-gradient(160deg,var(--c1),var(--c2));box-shadow:0 0 0 2px #15102a,0 0 0 3.5px var(--c1)}
+.sgp svg{display:block;width:100%;height:100%;border-radius:50%}
+.sgb{background:#2a2148;border-radius:16px 16px 16px 4px;padding:8px 12px 9px;min-width:0;text-align:left}
+.sgb b{display:block;font-size:12px;font-weight:700;color:#ffd98a;margin-bottom:2px}
+.sgb p,.sgn p,.sgcard p{margin:0;font-size:15.5px;line-height:1.38}
+.sgs.cont{margin-top:-6px}.sgs.cont .sgp{visibility:hidden;height:0}.sgs.cont .sgb b{display:none}.sgs.cont .sgb{border-radius:16px 16px 16px 4px}
+.sgn{justify-content:center}
+.sgn p{text-align:center;font-style:italic;color:rgba(232,224,255,.78);padding:2px 10px;max-width:46ch}
+.sgc{justify-content:center}
+.sgcard{position:relative;width:88%;background:#f4ead2;color:#3a2a1e;border-radius:6px;padding:12px 64px 14px 14px;text-align:left;transform:rotate(-1.4deg);
+  box-shadow:0 6px 18px rgba(0,0,0,.35);background-image:repeating-linear-gradient(90deg,transparent 0 60%,rgba(0,0,0,0) 60%)}
+.sgcard i{display:block;font-style:normal;font-size:10px;font-weight:800;letter-spacing:.12em;color:#a8642a;margin-bottom:5px}
+.sgcard p{font-family:'Caveat','Segoe Print','Bradley Hand',cursive;font-size:21px;line-height:1.15}
+.sgst{position:absolute;top:10px;right:10px;width:44px;height:44px;padding:3px;background:#fff;border:2px dashed #c8a870;border-radius:4px;transform:rotate(4deg)}
+.sgst svg{display:block;width:100%;height:100%}
+.sgpc{display:none;align-items:center;gap:10px;margin-top:4px;padding:10px 12px;border-radius:14px;background:rgba(255,212,92,.12);border:1px solid rgba(255,212,92,.4)}
+.sgpc.on{display:flex;animation:sgpop .5s cubic-bezier(.2,1.4,.4,1)}
+.sgpc svg{width:40px;height:55px;flex:none}
+.sgpc b{display:block;color:#ffd45c}
+.sgpc span{font-size:14px;color:rgba(244,240,255,.85)}
+@keyframes sgpop{from{transform:scale(.85);opacity:0}to{transform:none;opacity:1}}
+.sgpage{position:relative;width:92%;background:#efe4c8;color:#3a2a1e;border-radius:3px;padding:12px 16px 14px 26px;text-align:left;transform:rotate(.8deg);
+  box-shadow:0 6px 18px rgba(0,0,0,.35);background-image:repeating-linear-gradient(180deg,transparent 0 25px,rgba(90,120,170,.22) 25px 26px),linear-gradient(90deg,transparent 16px,rgba(200,80,80,.35) 16px 17px,transparent 17px)}
+.sgpage i{display:block;font-style:normal;font-size:10px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:#8a6a3a;margin-bottom:4px}
+.sgpage p{margin:0;font-family:'Caveat','Segoe Print','Bradley Hand',cursive;font-size:21px;line-height:1.24}
+.sgsig{display:inline-block;width:16px;height:21px;vertical-align:-4px;color:#a8642a}
+.sgtease{display:none;flex-direction:column;align-items:center;gap:2px;margin:6px 0 2px;padding:10px 12px;border-radius:14px;border:1px dashed rgba(255,217,138,.35);text-align:center}
+.sgtease.on{display:flex;animation:sgpop .5s cubic-bezier(.2,1.4,.4,1)}
+.sgtease i{font-style:normal;font-size:10.5px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,217,138,.75)}
+.sgtease b{font-size:16px}
+.sgtease span{font-size:12.5px;color:rgba(232,224,255,.6)}
+.sgfoot{flex:none;padding:10px 14px 14px}
+.sgfoot .sbtn{width:100%}
+.sgrw{display:inline-flex;align-items:center;gap:4px;margin-left:8px;padding:2px 8px;border-radius:999px;background:rgba(255,255,255,.2);font-size:14px}
+.sgrw svg{width:16px;height:16px}
+.sgbook .sgbody{padding-bottom:14px}
+.sglant{display:flex;align-items:center;gap:14px;padding:4px 4px 6px}
+.sglant svg{width:64px;height:88px;flex:none}
+.sglant p{margin:0;font-size:14.5px;line-height:1.4;color:rgba(232,224,255,.82)}
+.sgbk{display:flex;justify-content:space-between;align-items:baseline;gap:8px;margin:8px 4px 0;font-size:13px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:#ffd98a}
+.sgbk em{font-style:normal;font-weight:600;letter-spacing:0;text-transform:none;color:rgba(232,224,255,.6)}
+.sgbook .group{background:#211a3c;border-radius:14px;overflow:hidden}
+.sgrow{display:flex;align-items:center;gap:12px;width:100%;padding:11px 14px;border:0;background:none;color:inherit;font:inherit;text-align:left}
+.sgrow + .sgrow{border-top:1px solid rgba(255,255,255,.07)}
+.sgrow.lk{opacity:.6}
+.sgn0{flex:none;width:26px;height:26px;border-radius:50%;display:grid;place-items:center;background:rgba(255,212,92,.16);color:#ffd45c;font-weight:800;font-size:13px}
+.sgtt{flex:1;min-width:0}
+.sgtt b{display:block;font-size:15.5px;font-weight:700}
+.sgtt i{display:block;font-style:normal;font-size:12.5px;color:rgba(232,224,255,.65);margin-top:1px}
+.sgplay{flex:none;color:#ffd45c;font-size:14px}
+.sgopen{display:flex;align-items:center;gap:12px;width:100%;padding:10px 16px;border:0;background:none;color:inherit;font:inherit;text-align:left}
+.sgoi{flex:none;width:40px;height:52px;border-radius:10px;background:linear-gradient(160deg,#2a1f4a,#120c26);display:grid;place-items:center}
+.sgoi svg{width:30px;height:42px}
+.sgot{flex:1;min-width:0}.sgot b{display:block;font-size:17px;font-weight:700}.sgot i{display:block;font-style:normal;font-size:13px;color:var(--label2)}
+html.r8 .sgh h2,html.r8 .sgcard p{font-family:var(--font-num);font-size:16px;line-height:1.4}
+
+.nstr{position:absolute;left:0;top:0;width:100%;height:auto;z-index:1;pointer-events:none}
+#night .ndawn{position:absolute;left:0;right:0;bottom:0;width:100%;height:auto;pointer-events:none}
+#night.night{background:linear-gradient(180deg,#140c34 0%,#2a1a5a 38%,#7a3a6a 68%,#ff9a6a 100%)}
+.nsunr{animation:nrise 2.6s cubic-bezier(.2,.8,.3,1) both}
+@keyframes nrise{from{transform:translateY(40px)}to{transform:none}}
+.ncard{z-index:1}
+.ntalk{display:flex;align-items:flex-end;gap:9px;width:100%;text-align:left}
+.ntp .sgp{display:block}
+.ntb{flex:1;min-width:0;background:rgba(20,12,44,.78);border-radius:16px 16px 16px 4px;padding:8px 12px 9px;box-shadow:inset 0 0 0 1px rgba(255,255,255,.1)}
+.ntb b{display:block;font-size:12px;color:#ffd98a;margin-bottom:2px}
+.ncard .ntb p{margin:0;font-size:14.5px;line-height:1.38;opacity:1}
+.ncard .ntb p+p{margin-top:5px}
+.nhint{width:100%;padding:8px 12px;border-radius:14px;border:1px dashed rgba(255,217,138,.45);background:rgba(20,12,44,.55);display:flex;flex-direction:column;gap:1px}
+.nhint i{font-style:normal;font-size:10px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,217,138,.8)}
+.nhint b{font-size:15px}.nhint span{font-size:12.5px;opacity:.75}
+.pkst{margin:8px 0 2px;font-size:17px}.pkst b{color:var(--good)}.pkst span{font-size:13px;color:var(--label2)}
+.pkk{display:grid;grid-template-columns:1.3fr 1fr;gap:10px;margin-top:12px;text-align:left}
+.pkk>div{background:var(--fill);border-radius:12px;padding:9px 11px}
+.pkk h4{margin:0 0 4px;font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--label2)}
+.pkk>div:first-child h4{color:var(--good)}
+.pkk ul{margin:0;padding:0 0 0 16px;font-size:13.5px;line-height:1.45}
+.pkk p{margin:4px 0 0;font-size:11.5px;color:var(--label2)}
+.pkh{margin:14px 0 6px;font-size:13px;font-weight:700;color:var(--label2)}
+.pkm{display:flex;flex-wrap:wrap;justify-content:center;gap:8px}
+.pkb{display:flex;flex-direction:column;align-items:center;gap:3px;border:0;background:none;padding:2px;color:inherit;font:inherit;opacity:.55;transition:opacity .15s,transform .15s}
+.pkb span{width:46px;height:46px;border-radius:50%;background:linear-gradient(160deg,var(--c1),var(--c2));box-shadow:0 0 0 2px transparent}
+.pkb span svg{display:block;width:100%;height:100%;border-radius:50%}
+.pkb i{font-style:normal;font-size:11px;font-weight:600}
+.pkb.on{opacity:1;transform:scale(1.08)}.pkb.on span{box-shadow:0 0 0 2.5px #ffd45c}
+
+.ffl{position:absolute;inset:0;z-index:1;pointer-events:none;overflow:hidden}
+.ffl i{position:absolute;width:.75cqw;height:.75cqw;margin:-.37cqw 0 0 -.37cqw;border-radius:50%;background:#fff3b0;box-shadow:0 0 1.2cqw #ffe68a;opacity:.15;animation:twinkle 3s ease-in-out infinite;will-change:opacity}
+.mapbg{will-change:transform}
+.map.zz *,.map.zz *::before,.map.zz *::after,body.ovl .map *,body.ovl .map *::before,body.ovl .map *::after,body.ovl .sky *{animation-play-state:paused!important}
+
+.setb{display:flex;flex-direction:column;gap:6px;align-items:stretch;flex:none}
+.gbtn.price.wel s{opacity:.6;font-weight:600;margin-right:2px}
 /* Town picker as its own full-screen window */
 .twin{position:fixed;inset:0;z-index:60;display:flex;flex-direction:column;align-items:stretch;overscroll-behavior:contain;touch-action:none;
   padding:calc(env(safe-area-inset-top,0px) + 8px) max(12px,env(safe-area-inset-left,0px)) calc(env(safe-area-inset-bottom,0px) + 12px) max(12px,env(safe-area-inset-right,0px));
@@ -599,10 +717,10 @@ svg.pic{display:block;overflow:visible}
 }
 
 /* frosted-glass panels */
-:root{--pane:rgba(255,255,255,.55);--pane-line:rgba(255,255,255,.55)}
-@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--pane:rgba(28,26,48,.5);--pane-line:rgba(255,255,255,.14)}}
-:root,:root[data-theme]{--pane:rgba(28,26,48,.5);--pane-line:rgba(255,255,255,.14)}
-.group,.hero,.ut,.req,.sheet-card{background:var(--pane);-webkit-backdrop-filter:blur(18px) saturate(160%);backdrop-filter:blur(18px) saturate(160%);box-shadow:inset 0 0 0 1px var(--pane-line),0 6px 24px rgba(0,0,0,.18)}
+:root{--pane:rgba(255,255,255,.9);--pane-line:rgba(255,255,255,.55)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--pane:rgba(28,26,48,.86);--pane-line:rgba(255,255,255,.14)}}
+:root,:root[data-theme]{--pane:rgba(28,26,48,.86);--pane-line:rgba(255,255,255,.14)}
+.group,.hero,.ut,.req,.sheet-card{background:var(--pane);box-shadow:inset 0 0 0 1px var(--pane-line),0 6px 24px rgba(0,0,0,.18)}
 .sheet-card{background:color-mix(in srgb,var(--card) 62%,transparent)}
 .row.shop:not(.locked){background:linear-gradient(90deg,color-mix(in srgb,var(--c1) 22%,transparent),transparent 65%)}
 
@@ -782,6 +900,8 @@ html.r8 .twt em{font-size:14px;font-weight:500;color:#c2c3c7}
     <div class="map" id="map"><div class="tint"></div>
       <svg class="mapbg" id="mapbg" preserveAspectRatio="xMidYMid slice" aria-hidden="true"></svg>
       <svg class="snowl" id="snowl" preserveAspectRatio="xMidYMid slice" aria-hidden="true"></svg>
+      <div class="ffl" id="ffl" aria-hidden="true"></div>
+      <svg class="nstr" id="nstr" viewBox="0 0 360 34" aria-hidden="true"></svg>
       <div class="maptitle" aria-hidden="true">Lantern Lane</div>
       <div class="lms" id="lms" role="group" aria-label="Your night market"></div>
       <svg class="folk under" id="boatl" aria-hidden="true"></svg>
@@ -1273,14 +1393,14 @@ function loadAll(){
       g.buy=[1,10,100,'max'].indexOf(o.buy)>=0?o.buy:1;
       g.tab=TABS.indexOf(o.tab)>=0?o.tab:'shops';
       g.t=num(o.t,Date.now());
-      if(o.set&&typeof o.set==='object') g.set={sfx:o.set.sfx!==false,music:o.set.music!==false,badges:o.set.badges!==false};
+      if(o.set&&typeof o.set==='object') g.set={sfx:o.set.sfx!==false,music:o.set.music!==false,badges:o.set.badges!==false,story:o.set.story!==false};
       if(o.towns&&typeof o.towns==='object'){
         g.town=TOWN_BY_ID[o.town]?o.town:'lane';
         g.diamonds=Math.max(0,Math.floor(num(o.diamonds,0)));
         if(o.dg&&typeof o.dg==='object'&&o.dg.p&&o.dg.c) g.dg={d:String(o.dg.d||''),p:o.dg.p,c:o.dg.c,l0:num(o.dg.l0,0),tg:o.dg.tg==null?null:num(o.dg.tg,0)};
-        if(o.story&&typeof o.story==='object') g.story=o.story;
+        if(o.story&&typeof o.story==='object') g.story=o.story;if(o.saga&&typeof o.saga==='object') g.saga=o.saga;g.nightIntro=o.nightIntro?1:0;g.setWel=o.setWel?1:0;
         g.sp=o.sp;g.bal=o.bal?1:0;g.r8=o.r8?1:0;g.noads=o.noads?1:0;g.r8on=o.r8on===0?0:1;g.bless=Math.max(0,Math.min(5,Math.floor(num(o.bless,0))));if(o.skins&&typeof o.skins==='object') g.skins=o.skins;if(o.sk&&typeof o.sk==='object'){['b','v','p'].forEach(function(c){var id=o.sk[c];if(id==='classic'||(typeof id==='string'&&g.skins[id]&&['candy','glass','sky','v_candy','v_glass','v_ufo','p_robot','p_alien','p_pets'].indexOf(id)>=0)) g.sk[c]=id})}
-        if(o.fcap&&typeof o.fcap==='object') g.fcap={d:String(o.fcap.d||''),n:Math.max(0,Math.floor(num(o.fcap.n,0)))};
+        if(o.fcap&&typeof o.fcap==='object') g.fcap={d:String(o.fcap.d||''),n:Math.max(0,Math.floor(num(o.fcap.n,0)))};if(o.wad&&typeof o.wad==='object') g.wad={d:String(o.wad.d||''),n:Math.max(0,Math.floor(num(o.wad.n,0)))};
         if(o.daily&&typeof o.daily==='object') g.daily={d:String(o.daily.d||''),streak:Math.max(0,Math.floor(num(o.daily.streak,0)))};
         if(o.ach&&typeof o.ach==='object') Object.keys(o.ach).forEach(function(k){g.ach[k]=1});
         if(Array.isArray(o.fx)) o.fx.forEach(function(f){if(f&&(f.k==='profit'||f.k==='speed')&&num(f.x,0)>0&&num(f.until,0)>0) g.fx.push({k:f.k,x:f.x,until:f.until,src:f.src==='d'?'d':'l'})});
@@ -1721,7 +1841,7 @@ function spRender(){var el=$('#spec');if(!el) return;var id=T.id,q=G.sp[id],d=SP
     D=full?'Full combo! ×3 profit · '+Math.ceil((q.until-now)/1000)+'s':q.c>0?'Combo '+q.c+' / 10 · +'+(q.c*10)+'% profit · keep going!':'Tap different shops quickly to build a combo';
     Gt='Each step +10% profit, 10 in a row = ×3 for 15s. Same shop twice or a 3s pause breaks it · '+goal}
   else{ph=Math.min(2,Math.floor(q.t/60));bar=q.t/180;hot=q.w>.5;
-    D=['Early evening · bottom row busy ×2','Mid evening · middle row busy ×2','Late evening · top row busy ×2'][ph];
+    D=['Early evening · top row busy ×2','Mid evening · middle row busy ×2','Late evening · bottom row busy ×2'][ph];
     Gt='Warmth '+Math.round(q.w*100)+'% (+'+Math.round(q.w*50)+'% profit) · buy '+SHOPS[0].name+' or '+SHOPS[1].name+' to warm up · '+goal}
   var e;if((e=$('#spD'))&&e.textContent!==D) e.textContent=D;if((e=$('#spG'))&&e.textContent!==Gt) e.textContent=Gt;
   if(e=$('#spB')) e.style.width=(Math.max(0,Math.min(1,bar))*100).toFixed(1)+'%';
@@ -1775,8 +1895,9 @@ function mapRows(){return Math.ceil(N/MAP.cols)}
 function mapH(){return 198+(mapRows()-1)*(T.rowH||MAP.rowH)}
 function rowY(r){return mapH()-64-r*(T.rowH||MAP.rowH)}
 function slotPos(i){
-  var r=Math.floor(i/MAP.cols),c=i%MAP.cols,j=(T.jit&&T.jit[i])||[0,0];
-  return {x:((r%2)?MAP.xs[MAP.cols-1-c]:MAP.xs[c])+j[0],y:rowY(r)+j[1]};
+  /* shops 1-3 on the top row, 7-9 on the bottom row; the middle row runs back the other way like a winding street */
+  var lr=Math.floor(i/MAP.cols),r=mapRows()-1-lr,c=i%MAP.cols,j=(T.jit&&T.jit[i])||[0,0];
+  return {x:((lr%2)?MAP.xs[MAP.cols-1-c]:MAP.xs[c])+j[0],y:rowY(r)+j[1]};
 }
 /* Nine building designs that grow from a food cart to a tower. Each town reuses them in its own colours. */
 function stripes(x,y,n,w,drop){var o='';for(var k=0;k<n;k++) o+='<path class="'+(k%2?'s0':'s1')+'" d="M'+(x+k*w).toFixed(1)+' '+y+'h'+w.toFixed(1)+'v'+drop+'a'+(w/2).toFixed(2)+' '+(w/2).toFixed(2)+' 0 0 1-'+w.toFixed(1)+' 0z"/>';return o}
@@ -2928,11 +3049,12 @@ function mapBgSvg(){
 
   // snowfall (Frost Fair)
 
-  // fireflies
+  // fireflies (drawn on their own layer, see buildMap)
+  FFLY=[];
   for(k=0;k<14;k++){
     var fx=rv(8,W-8),fy=rv(8,H-8);
     if(inBox(boxes,fx,fy,2)) continue;
-    s+='<circle class="ff" cx="'+fx.toFixed(1)+'" cy="'+fy.toFixed(1)+'" r="1.3" fill="#fff3b0" style="animation-delay:'+rv(0,3).toFixed(2)+'s"/>';
+    FFLY.push([fx/W*100,fy/H*100,rv(0,3)]);
   }
   s+='<rect width="'+W+'" height="'+H+'" fill="url(#mMoon)"/>';
   return s;
@@ -3108,6 +3230,19 @@ function pixLayer(svg,k){
   img.src='data:image/svg+xml;charset=utf-8,'+encodeURIComponent(src);
 }
 function unpix(){for(var i=0;i<arguments.length;i++){var v=arguments[i];if(!v) continue;v.__pxTok=(v.__pxTok||0)+1;v.style.visibility='';if(v.__pxc) v.__pxc.style.display='none'}}
+
+/* one lantern on the string over the map for every night this town has closed */
+function nightString(){
+  var el=$('#nstr');if(!el) return;var n=Math.min(S.nights||0,48);
+  if(!n){el.innerHTML='';return}
+  var C=['#ffb347','#ff6b6f','#ffd45c','#ff8ac4','#7fe0ff','#a8ff9a'],o='<path d="M-4 3Q180 40 364 3" fill="none" stroke="rgba(20,12,30,.7)" stroke-width="1.1"/>';
+  for(var i=0;i<n;i++){
+    var t=(i+1)/(n+1),x=-4+368*t,y=3+(1-Math.pow(2*t-1,2))*18.5+2,c=C[i%C.length];
+    o+='<g transform="translate('+x.toFixed(1)+' '+y.toFixed(1)+') scale(1.45)"><path d="M0 -2v2" stroke="rgba(30,20,40,.6)" stroke-width=".7"/><circle r="5.5" fill="'+c+'" opacity=".22"/><ellipse cy="2.6" rx="2.6" ry="3.2" fill="'+c+'"/><rect x="-1.4" y="-.4" width="2.8" height=".9" fill="#3a2418"/><path d="M-1 1.6q1 -.6 2 0" stroke="#fff" stroke-width=".5" opacity=".7" fill="none"/></g>';
+  }
+  el.innerHTML=o;
+}
+var FFLY=[];
 function buildMap(){
   var H=mapH(),map=$('#map');
   $('.maptitle').textContent=T.name;$('#townName').textContent=T.name;
@@ -3118,6 +3253,8 @@ function buildMap(){
     sl.innerHTML=so}
   var bl=$('#bridgel');bl.setAttribute('viewBox','0 0 360 '+H);bl.innerHTML=bridgeSvg();
   if(retroOn()){pixLayer(bg,1.5);pixLayer(bl,1.5)}else unpix(bg,bl);
+  nightString();
+  var ffl=$('#ffl');if(ffl) ffl.innerHTML=perfLow?'':FFLY.map(function(f){return '<i style="left:'+f[0].toFixed(2)+'%;top:'+f[1].toFixed(2)+'%;animation-delay:-'+f[2].toFixed(2)+'s"></i>'}).join('');
   var L=$('#lms');L.innerHTML='';vRefs=[];L.classList.toggle('nobadge',G.set.badges===false);
   SHOPS.forEach(function(s,i){
     var p=slotPos(i),b=document.createElement('div');
@@ -3389,7 +3526,7 @@ function syncFolk(){
   }
   var want=opened?Math.min(perfLow?18:48,opened*2+mg+Object.keys(S.upg).length+Math.floor(tot/25)):0;
   folkWant=want;
-  folkMaxRow=Math.min(mapRows()-1,mx);
+  folkMaxRow=mapRows()-1; /* the first shops are now at the top, so visitors use every street */
   if(!seeded&&want>0&&folk.length===0){while(folk.length<want) spawnFolk();seeded=true}
   var act=folk.filter(function(p){return !p.leaving});
   if(!buses.length){
@@ -3597,6 +3734,8 @@ function buildStars(){
     '</div></div>'+
     '<button type="button" class="cta" id="btnPrestige">Close for the night</button>'+
     '<p class="foot">Closing resets your cash, shops, managers and upgrades. Your stars stay, and each one adds +2% profit to every shop.</p>'+
+    '<h2 class="hd">Story</h2>'+
+    '<div class="group"><button type="button" class="sgopen" id="btnSaga"><span class="sgoi">'+lanternArt()+'</span><span class="sgot"><b>The Lantern Map</b><i id="sgProg"></i></span><span class="sgplay">\u203a</span></button></div>'+
     '<h2 class="hd">Star perks</h2>'+
     '<div class="group" id="perkBody"></div>'+
     '<p class="foot" id="perkFoot"></p>'+
@@ -3612,12 +3751,15 @@ function buildStars(){
       '<div class="row brow"><div class="bi"><div class="bnm">Sound effects</div><div class="bsub">Coins, buying and lanterns</div></div><button type="button" class="tg" role="switch" data-snd="sfx" aria-label="Sound effects"></button></div>'+
       '<div class="row brow"><div class="bi"><div class="bnm">Music</div><div class="bsub">Soft night-market tunes, a new key in each town</div></div><button type="button" class="tg" role="switch" data-snd="music" aria-label="Music"></button></div>'+
       '<div class="row brow"><div class="bi"><div class="bnm">Smooth mode</div><div class="bsub">Fewer visitors and effects, for slower phones</div></div><button type="button" class="tg" role="switch" data-perf="1" aria-label="Smooth mode"></button></div>'+
+      '<div class="row brow"><div class="bi"><div class="bnm">Story scenes</div><div class="bsub">Short chapters of The Lantern Map as you play</div></div><button type="button" class="tg" role="switch" data-story="1" aria-label="Story scenes"></button></div>'+
       '<div class="row brow"><div class="bi"><div class="bnm">Manager badges</div><div class="bsub">Show hired managers on the map</div></div><button type="button" class="tg" role="switch" data-badge="1" aria-label="Manager badges"></button></div>'+
     '</div>'+
     '<h2 class="hd">Data</h2>'+
     '<div class="group"><button type="button" class="linkrow" id="btnGuide">Replay the guide</button><button type="button" class="linkrow" id="btnExport">Export save…</button><button type="button" class="linkrow" id="btnImport">Import save…</button><button type="button" class="linkrow danger" id="btnErase">Erase save…</button></div>'+
     '<p class="foot">Your towns save automatically on this device.</p>';
   $('#btnPrestige').addEventListener('click',askPrestige);
+  $('#btnSaga').addEventListener('click',openSagaBook);
+  (function(){var n=SAGA.filter(function(b){return sagaSeen(b.id)}).length;$('#sgProg').textContent=n+' of '+SAGA.length+' chapters'})();
   $('#perkBody').addEventListener('click',function(e){
     var b=e.target.closest('[data-perk]');if(!b||b.disabled) return;
     var k=b.dataset.perk,P=PERKS[k],L=G.perks[k],c=P.cost[L];
@@ -3629,6 +3771,7 @@ function buildStars(){
   renderPerks();
   $('#starBody').addEventListener('click',function(e){
     var pb=e.target.closest('[data-perf]');if(pb){perfLow=!perfLow;perfSet=true;pfLow=0;try{localStorage.setItem('lanternLane.perfLow',perfLow?'1':'0')}catch(e2){}rebuildTown();syncSnd();return}
+    var sb=e.target.closest('[data-story]');if(sb){G.set.story=G.set.story===false;syncSnd();save();return}
     var mb=e.target.closest('[data-badge]');if(mb){G.set.badges=G.set.badges===false;applySkin();syncSnd();save();return}
     var b=e.target.closest('[data-snd]');if(!b) return;
     initAudio();var k=b.dataset.snd;G.set[k]=!G.set[k];applyAudio();syncSnd();save();
@@ -3660,7 +3803,7 @@ function updatePerks(){
   $$('#perkBody [data-perk]').forEach(function(b){var P=PERKS[b.dataset.perk];b.disabled=av<P.cost[G.perks[b.dataset.perk]]});
   var f=$('#perkFoot');if(f) f.textContent='You have '+fmt(av)+(av===1?' star':' stars')+' to spend. Spent stars still count for the +2% profit bonus.';
 }
-function syncSnd(){$$('[data-badge]').forEach(function(b){var on=G.set.badges!==false;b.classList.toggle('on',on);b.setAttribute('aria-checked',String(on))});$$('[data-perf]').forEach(function(b){b.classList.toggle('on',perfLow);b.setAttribute('aria-checked',String(perfLow))});$$('[data-snd]').forEach(function(b){var on=!!G.set[b.dataset.snd];b.classList.toggle('on',on);b.setAttribute('aria-checked',String(on))})}
+function syncSnd(){$$('[data-story]').forEach(function(b){var on=G.set.story!==false;b.classList.toggle('on',on);b.setAttribute('aria-checked',String(on))});$$('[data-badge]').forEach(function(b){var on=G.set.badges!==false;b.classList.toggle('on',on);b.setAttribute('aria-checked',String(on))});$$('[data-perf]').forEach(function(b){b.classList.toggle('on',perfLow);b.setAttribute('aria-checked',String(perfLow))});$$('[data-snd]').forEach(function(b){var on=!!G.set[b.dataset.snd];b.classList.toggle('on',on);b.setAttribute('aria-checked',String(on))})}
 function updateStarsUI(){
   updatePerks();
   var p=pendingStars(),cur=S.claim+p,sc=1e8*T.scale;
@@ -3678,38 +3821,74 @@ function updateStarsUI(){
   $('#stNights').textContent=String(S.nights);
   $('#stIps').textContent=money(calcIps())+'/s';
 }
+var pKeep=-1;
 function askPrestige(){
   var g=pendingStars();if(g<1) return;
-  var tot=G.stars+g;
+  var tot=G.stars+g,gems=Math.min(25,1+Math.floor(g/3)),hired=[];
+  S.shops.forEach(function(sh,i){if(sh.mgr) hired.push(i)});
+  pKeep=hired.length?hired.reduce(function(a,i){return S.shops[i].n>S.shops[a].n?i:a},hired[0]):-1;
+  var pick=hired.length?'<div class="pkh">One manager stays with you</div><div class="pkm" role="radiogroup" aria-label="Manager who stays">'+hired.map(function(i){
+      return '<button type="button" class="pkb'+(i===pKeep?' on':'')+'" role="radio" aria-checked="'+(i===pKeep)+'" data-pk="'+i+'" style="--c1:'+SHOPS[i].c1+';--c2:'+SHOPS[i].c2+'"><span>'+portrait(i)+'</span><i>'+SHOPS[i].mgr.split(' ').slice(-1)[0]+'</i></button>'}).join('')+'</div>':'';
   openSheet({
     title:'Close '+T.name+' for the night?',
-    msg:'You collect '+g+(g===1?' star':' stars')+', for '+tot+' in total and +'+(tot*10)+'% profit on every shop in every town. Cash, shops, managers and upgrades in '+T.name+' start over. Other towns are not affected. You also earn '+Math.min(25,1+Math.floor(g/3))+' diamonds.',
+    html:'<div class="pkst"><b>+'+fmt(g)+'</b> stars · <b>+'+gems+'</b> diamonds<br><span>'+fmt(tot)+' stars in total = +'+fmt(tot*2)+'% profit in every town</span></div>'+
+      '<div class="pkk"><div><h4>You keep</h4><ul><li>Stars and star perks</li><li>Diamonds and skins</li><li>The story and your goals</li><li>Your other towns</li><li>Your first shop, open</li>'+(hired.length?'<li>One manager (pick below)</li>':'')+'</ul></div>'+
+      '<div><h4>Starts over</h4><ul><li>Cash</li><li>Shops</li><li>Managers</li><li>Upgrades</li></ul><p>Only in '+T.name+'</p></div></div>'+pick,
     actions:[{label:'Close for the night',kind:'primary',fn:doPrestige}]
   });
+  $$('#sheet [data-pk]').forEach(function(bt){bt.addEventListener('click',function(){pKeep=+bt.dataset.pk;$$('#sheet [data-pk]').forEach(function(x){var on=+x.dataset.pk===pKeep;x.classList.toggle('on',on);x.setAttribute('aria-checked',String(on))})})});
 }
 function doPrestige(){
   var g=pendingStars();if(g<1) return;
-  var keep={claim:S.claim+g,lifetime:S.lifetime,nights:S.nights+1};
+  var keep={claim:S.claim+g,lifetime:S.lifetime,nights:S.nights+1},km=pKeep,top=0;
+  S.shops.forEach(function(sh,i){if(sh.n>0) top=i});
   G.stars+=g;sfx('chime');burst(innerWidth/2,innerHeight*.35,['#ffd45c','#ff9a3d','#fff0a8','#ff6b6f','#6fe0ff'],34,150);
   var gems=Math.min(25,1+Math.floor(g/3));G.diamonds+=gems;
   S=newTown(T);S.claim=keep.claim;S.lifetime=keep.lifetime;S.nights=keep.nights;
   for(var hs=0;hs<G.perks.head&&hs<S.shops.length;hs++){S.shops[hs].n=1;S.shops[hs].mgr=true;S.shops[hs].run=true}
+  if(S.shops[0].n<1) S.shops[0].n=1;
+  if(km>=0&&S.shops[km]) S.shops[km].mgr=true;pKeep=-1;
   G.towns[T.id]=S;
   recalc();RT.forEach(function(r){r.pa=0;r.pt=0});
   renderManagers();renderUpgrades();
   setTab('stars');refreshUI();save();
-  showNight(g,gems,S.nights);
+  nightString();
+  showNight(g,gems,S.nights,km>=0?km:top);
 }
-function showNight(g,gems,n){
+var DAWN={
+ lane:[[0,'Best night this month, child. Now sleep. Burek waits for no one.'],[4,'Dawn already? The coffee says otherwise.'],[7,'We played until the roosters complained.'],[1,'Sold out of kebab by midnight. Tomorrow, double.'],[8,'Look, the sun is coming over Sharr. Same as fifty years ago.'],[6,'The beans are soaking. Some things you start the night before.']],
+ harbor:[[2,'The canals are empty and the gondolas are asleep. Buonanotte.'],[0,'Not one scoop left. The pigeons are furious.'],[5,'The last espresso of the night is the first of the morning.'],[8,'A fine night. Venice approves, and Venice approves of nothing.']],
+ frost:[[0,'The punch is gone and the hearts are warm. Gute Nacht.'],[6,'The horses are asleep standing up. Very professional.'],[5,'Every snowflake tonight was different. I checked.'],[8,'Encore tomorrow, darling. Same time, more snow.']],
+ tokyo:[[0,'Last bowl, last train. See you tonight.'],[5,'Room 7 is still singing. They will stop when they stop.'],[7,'The first train leaves at 5:01. Exactly.'],[2,'The neon goes out and the birds come in. Rest, dear.']]
+};
+function dawnSky(){
+  var hills=T.id==='tokyo'?'<path d="M0 70V52h14V40h10v12h8V30h12v22h10V44h12v26zM180 70V48h10V36h14v12h8V28h8V18h4v10h8v42z" fill="#2a1840"/><path d="M90 70V56h16V46h12v10h18V38h14v32z" fill="#3a2050"/>':
+    T.id==='harbor'?'<path d="M0 70V54q10-6 20 0V46h10v8h14V40l6-6 6 6v30zM160 70V50h12v-6h6v6h12V40q8-8 16 0v30z" fill="#2a1840"/><path d="M70 70V58h20V48l6-8 6 8v10h30v12z" fill="#3a2050"/>':
+    T.id==='frost'?'<path d="M0 70L30 44l20 12 30-26 30 24 20-14 40 30z" fill="#3a2a5a"/><path d="M100 70V50h10V38l6-10 6 10v12h12v20z" fill="#2a1840"/>':
+    '<path d="M0 70L40 30l25 18 35-34 40 30 25-14 35 40z" fill="#3a2050"/><path d="M0 70L50 50l40 10 50-18 60 28z" fill="#2a1840"/>';
+  return '<svg class="ndawn" viewBox="0 0 200 70" preserveAspectRatio="xMidYMax meet" aria-hidden="true"><defs><radialGradient id="nsun" cx=".5" cy=".5" r=".5"><stop offset="0" stop-color="#fff4c8"/><stop offset=".5" stop-color="#ffc85a"/><stop offset="1" stop-color="#ff8a3d" stop-opacity="0"/></radialGradient></defs>'+
+    '<g class="nsunr"><circle cx="148" cy="30" r="30" fill="url(#nsun)"/><circle cx="148" cy="30" r="10" fill="#ffe08a"/></g>'+hills+'</svg>';
+}
+function showNight(g,gems,n,who){
   var old=$('#night');if(old) old.remove();
   var el=document.createElement('div');el.id='night';el.className='night';el.setAttribute('role','dialog');el.setAttribute('aria-modal','true');el.setAttribute('aria-label','Night complete');
-  var stars='';for(var i=0;i<26;i++) stars+='<i style="left:'+(Math.random()*100).toFixed(1)+'%;top:'+(Math.random()*100).toFixed(1)+'%;animation-delay:-'+(Math.random()*3).toFixed(2)+'s"></i>';
-  el.innerHTML='<div class="nstars">'+stars+'</div><div class="ncard">'+
-    '<svg class="nmoon" viewBox="0 0 80 80" aria-hidden="true"><defs><radialGradient id="nmg" cx=".4" cy=".35" r=".8"><stop offset="0" stop-color="#fff8dc"/><stop offset="1" stop-color="#f4c85a"/></radialGradient></defs><circle cx="40" cy="40" r="30" fill="url(#nmg)"/><circle cx="52" cy="32" r="26" fill="#14102c" opacity=".0"/></svg>'+
-    '<div class="nk">Night '+n+' complete</div><h2>'+T.name+' closes its shutters</h2>'+
+  var stars='';for(var i=0;i<26;i++) stars+='<i style="left:'+(Math.random()*100).toFixed(1)+'%;top:'+(Math.random()*60).toFixed(1)+'%;animation-delay:-'+(Math.random()*3).toFixed(2)+'s"></i>';
+  /* who talks at dawn: Mama Hajrije explains the night the very first time, then a manager of this town */
+  var talk;
+  if(!G.nightIntro){G.nightIntro=1;save();
+    talk='<div class="ntalk"><span class="ntp">'+sgFace('lane',0)+'</span><div class="ntb"><b>Mama Hajrije</b><p>A night market dies every morning and is born again every evening. That is the trick, child.</p><p>The stars you keep. The rest you build again, bigger. The lane remembers.</p></div></div>';
+  }else{
+    var pool=DAWN[T.id]||DAWN.lane,q=pool[Math.floor(Math.random()*pool.length)];
+    if(who!=null&&Math.random()<.5){var own=pool.filter(function(x){return x[0]===who})[0];if(own) q=own}
+    var nb=typeof firstUnseen==='function'?firstUnseen():null;
+    talk='<div class="ntalk"><span class="ntp">'+sgFace(T.id,q[0])+'</span><div class="ntb"><b>'+SHOPS[q[0]].mgr+'</b><p>'+q[1]+'</p></div></div>'+
+      (nb&&G.set.story!==false&&Math.random()<.6?'<div class="nhint"><i>Next in the story</i><b>'+nb.t+'</b><span>'+(nb.town!==T.id?'In '+TOWN_PLACE[nb.town]+': ':'')+nb.hint+'</span></div>':'');
+  }
+  el.innerHTML='<div class="nstars">'+stars+'</div>'+dawnSky()+'<div class="ncard">'+
+    '<div class="nk">Night '+n+' complete · lantern '+n+' hung</div><h2>Dawn over '+T.name+'</h2>'+
     '<div class="nbig"><span id="nCount">0</span><svg viewBox="0 0 32 32" aria-hidden="true"><path d="M16 3l3.8 8 8.7 1.1-6.4 6 1.7 8.7L16 22.2 8.2 26.8l1.7-8.7-6.4-6L12.2 11z" fill="url(#icGold)" stroke="rgba(70,35,10,.45)" stroke-width=".9" stroke-linejoin="round"/></svg></div>'+
     '<div class="nrows"><div><span>Diamonds</span><b>+'+gems+'</b></div><div><span>Profit bonus, every town</span><b>+'+fmt(G.stars*2)+'%</b></div><div><span>Total stars</span><b>'+fmt(G.stars)+'</b></div></div>'+
-    '<p>Your shops start over, but the stars stay with you forever. The market reopens at dusk.</p>'+
+    talk+
     '<button type="button" class="nbtn" id="nGo">Open at dusk</button></div>';
   document.body.appendChild(el);
   var cnt=$('#nCount'),t0=performance.now(),dur=RM.matches?1:1300;
@@ -3761,10 +3940,10 @@ function switchTown(id){
 }
 
 var STORY={
-  lane:{t:'Tetovo, after dark',m:'When the shops close and the mountain goes blue, the old lane fills with lanterns. Grandma Mira sold burek from a single cart here for forty years. Now it is yours. Grow it from one cart into the best-loved market in the valley.'},
-  harbor:{t:'Venice, where the water is the street',m:'Gondolas drift between the lamps and every canal corner has a hungry crowd. A baker called Luca has saved you a spot on the quay. Serve the evening, hire good people and the whole lagoon will hear about you.'},
-  tokyo:{t:'Tokyo, the city that never sleeps',m:'Neon signs flicker on as the last trains roll in. Your friend Kenji runs a tiny ramen stand under the railway bridge and he has saved you a stool. Build the night up from one bowl of noodles to the brightest view in the city.'},
-  frost:{t:'Vienna, the Winter Fair',m:'Snow on the rooftops, steam from the punch stands and a big wheel turning above the square. The fair opens for the season and the neighbours have already started to queue. Keep the punch hot and the lights on.'}
+  lane:{t:'Tetovo, after dark',m:'When the shops close and the mountain turns blue, the old lane fills with lanterns. Mama Hajrije has lent you her burek cart for the season. Grow it from one cart into the best-loved night market in the valley.'},
+  harbor:{t:'Venice, where the water is the street',m:'Gondolas drift between the lamps and every canal corner has a hungry crowd. Gino has saved you a spot on the quay. You came for a count and a box of old glass, but the canal will want feeding first.'},
+  tokyo:{t:'Tokyo, the city that never sleeps',m:'Neon signs flicker on as the last trains roll in. Kenji runs a tiny ramen stand under the railway bridge and he has saved you a stool. Somewhere in this city, an old man meets every train from the west.'},
+  frost:{t:'Vienna, the Winter Fair',m:'Snow on the rooftops, steam from the punch stands and a big wheel turning above the square. Somewhere in this city is a clockmaker with very loud hair. Keep the punch hot and the lights on.'}
 };
 function showStory(id){
   if(!STORY[id]||G.story[id]) return;
@@ -3772,6 +3951,262 @@ function showStory(id){
   G.story[id]=1;save();
   openSheet({title:STORY[id].t,msg:STORY[id].m,nocancel:true,actions:[{label:'Open for the night',kind:'primary',fn:function(){}}]});
 }
+
+/* ---------- The Lantern Map: a mystery told through an old journal, postcards and your managers ---------- */
+/* speakers: a number is a manager of that chapter's town, [town,i] a manager from another town,
+   'n' the narrator, ['card',town] a postcard, 'page' a page from the old journal. {L} draws the little lantern signature. */
+function sgShops(){return S.shops.filter(function(x){return x.n>0}).length}
+function sgMgrs(){return S.shops.filter(function(x){return x.mgr}).length}
+function sgOwn(i){return S.shops[i]&&S.shops[i].n>0}
+var SAGA_BOOKS=[
+ {town:'lane',book:'Book I',name:'The Cart'},
+ {town:'harbor',book:'Book II',name:'The Glass'},
+ {town:'frost',book:'Book III',name:'The Heart'},
+ {town:'tokyo',book:'Book IV',name:'The Paper'},
+ {town:'lane',book:'Epilogue',name:'Home'}
+];
+var SAGA=[
+ /* ---- Book I: Tetovo ---- */
+ {id:'l1',bk:0,town:'lane',t:'The cart with a secret',hint:'Open your first shop',when:function(){return sgOwn(0)},g:3,L:[
+  ['n','Your first night on Lantern Lane. Mama Hajrije has lent you her old burek cart. It is older than the street lamps.'],
+  [0,'Treat her gently. She has seen more winters than you.'],
+  ['n','When you close up, you find a small lantern carved into the wood under the counter. Next to it, someone has scratched five tiny initials.'],
+  ['n','Four of them have been scratched out.']]},
+ {id:'l2',bk:0,town:'lane',t:'Four scratched names',hint:'Open 3 shops',when:function(){return sgShops()>=3},g:3,L:[
+  [1,'Five names on Mama’s cart? She never talks about the old days. Not even to me, and I’m her favourite.'],
+  [1,'Ask the old men at the coffee shop. They remember everything. Mostly wrong, but everything.'],
+  [4,'That cart? Ah. One winter, long ago, the snow closed the mountain pass and a bus full of strangers got stuck in our town for three months.'],
+  [4,'Some of them never really left. Some of them left and never came back. More coffee?']]},
+ {id:'l3',bk:0,town:'lane',t:'The drawer that never opens',hint:'Open the Bean Pot',when:function(){return sgOwn(6)},g:5,L:[
+  [6,'So you’re the one pushing Hajrije’s cart. Hm. Does the left wheel still stick?'],
+  ['n','It does. He laughs. Then he stops laughing, as if he remembered something he had decided to forget.'],
+  [6,'There is a drawer under the oven. It doesn’t open. It never opened. Leave it alone.'],
+  ['n','Of course, that night, you open it. Inside is a single page torn from a journal.'],
+  ['page','Winter, 1976. The snow closed the pass and gave me four strangers. A boy who talks to glass, a boy who talks to clocks, a boy who folds paper like prayers. And Besim, who talks to nobody.\n\nI think I will keep them.']]},
+ {id:'l4',bk:0,town:'lane',t:'A postcard from the fog',hint:'Close for the night in Tetovo',when:function(){return S.nights>=1},g:4,L:[
+  [['card','harbor'],'If you opened the drawer, you have started something.\nVenice is beautiful in the fog.\n{L}'],
+  [5,'Who sends a postcard to a burek cart? And who signs with a little lantern instead of a name?'],
+  ['n','Mama Hajrije looks at the card for a long time. Then she hands it back and goes on rolling pastry.'],
+  [0,'Some people are better at leaving than at saying goodbye.']]},
+ {id:'l5',bk:0,town:'lane',t:'What they built in the snow',hint:'Open all 9 shops',when:function(){return sgShops()>=9},g:6,L:[
+  [7,'My father played the drum that winter. He said five young fools built a lantern in the snow out of whatever they had. Brass, glass, a music box, paper.'],
+  [7,'When they lit it, the whole lane came out to look. He said it wasn’t bright. It was warm. There’s a difference.'],
+  ['n','The next morning, a second journal page is tucked under your cart’s wheel. Nobody saw who left it.'],
+  ['page','We made a promise tonight. Each of us takes one piece home, so the lantern can only shine when we are all together again.\n\n“Fifty years at most,” said Alvise. We all laughed. Fifty years sounded like forever.']]},
+ {id:'l6',bk:0,town:'lane',t:'A bus that stopped coming',hint:'Open Sharri and hire 5 managers',when:function(){return sgOwn(8)&&sgMgrs()>=5},g:6,L:[
+  [8,'Grandpa Besim goes up to his hut on Sharr every winter and stays one night. Alone. I followed him once.'],
+  [8,'He sat by the window with an old brass frame on his knees, watching the road from the pass. Like he was waiting for a bus that stopped coming fifty years ago.'],
+  ['n','Fifty years. You count back from 1976 on your fingers.'],
+  ['n','The promise is due this winter.']]},
+ {id:'l7',bk:0,town:'lane',t:'The left wheel still sticks',hint:'Reach 5,000 stars',when:function(){return G.stars>=5000},g:10,piece:'frame',L:[
+  ['n','Besim is waiting by your cart before the lane even opens. He is holding the brass frame. His hands are shaking a little. He says it is the cold.'],
+  [6,'Nobody came. Not one of them. Not one letter. So I stopped waiting. That is what you do.'],
+  [6,'…But if you are going to Venice anyway. If you happen to see a man who talks to glass…'],
+  [6,'Tell him the left wheel still sticks. He’ll know.']]},
+
+ /* ---- Book II: Venice ---- */
+ {id:'h1',bk:1,town:'harbor',t:'Fog on the water',hint:'Open your first shop in Venice',when:function(){return sgOwn(0)},g:3,L:[
+  [2,'Benvenuto! Hold on, the fog is thick tonight. In Venice the fog keeps secrets better than the priests.'],
+  [0,'A brass lantern frame? That looks like the one in the old photograph at the Count’s palazzo. Nobody has been inside for years.']]},
+ {id:'h2',bk:1,town:'harbor',t:'The man who talks to glass',hint:'Open 3 shops',when:function(){return sgShops()>=3},g:3,L:[
+  [1,'Count Alvise? He used to be the life of every party. Then one spring he came home from the mountains with a broken heart and a box of glass, and he closed his doors.'],
+  [1,'A broken heart over a girl, some say. Over his friends, I say. The heart doesn’t care which.']]},
+ {id:'h3',bk:1,town:'harbor',t:'Two sets of glass',hint:'Open the Glassblower',when:function(){return sgOwn(6)},g:5,L:[
+  [6,'These grooves were cut for Murano panes. I know the hand. My master made four panes for a lantern in 1976. The order came from a young count.'],
+  [6,'Then in 1977 the same count came back and ordered four more. For a lantern that already had its glass.'],
+  [6,'My master never understood why. Neither do I.']]},
+ {id:'h4',bk:1,town:'harbor',t:'One city ahead',hint:'Close for the night in Venice',when:function(){return S.nights>=1},g:4,L:[
+  [['card','frost'],'He made the second set for the day we would meet again. He never used it.\nVienna next. Bring a scarf.\n{L}'],
+  [5,'From Vienna this time! Your secret friend is always one city ahead of you.'],
+  [4,'Whoever it is knows the Count very well. Better than the Count knows himself, I think.']]},
+ {id:'h5',bk:1,town:'harbor',t:'Snow in April',hint:'Open the Grand Hotel',when:function(){return sgOwn(8)},g:6,L:[
+  ['n','The palazzo doors finally open. Not for you. For the brass frame. The Count takes it from your hands without a word and holds it up to the light.'],
+  ['n','You tell him the left wheel still sticks.'],
+  [8,'Ha. Of course it does. Besim never oiled anything in his life.'],
+  [8,'I went back, you know. Spring of 1977, with the new glass in my lap. The pass was closed again. Snow, in April.'],
+  [8,'I took it as an answer.']]},
+ {id:'h6',bk:1,town:'harbor',t:'Every year, a little more afraid',hint:'Hire 7 managers in Venice',when:function(){return sgMgrs()>=7},g:6,L:[
+  [8,'Every year I meant to try again. Every year I was a little more proud and a little more afraid. And then it was fifty years.'],
+  [6,'The second set is still in his workshop, wrapped in newspaper from 1977. Not one scratch. He polishes them every Sunday.'],
+  [7,'My boats are fast, Count. Whatever you’re too scared to carry, I’ll carry it for you.']]},
+ {id:'h7',bk:1,town:'harbor',t:'The glass for coming back',hint:'Reach 250,000 stars',when:function(){return G.stars>=250000},g:10,piece:'glass',L:[
+  [8,'Take them. Not the old glass. The second set. The glass I made for coming back.'],
+  [8,'And this letter is for the clockmaker in Vienna. Don’t read it. It is mostly apologies, and some very bad poetry.'],
+  ['n','As you unwrap the panes, a page slips out of the old newspaper. The same handwriting as the drawer.'],
+  ['page','Alvise asked me tonight if he could stay. I said the lane needs me, and Venice needs him. He laughed and said nobody needs him.\n\nI hope one day he finds out how wrong he was.']]},
+
+ /* ---- Book III: Vienna ---- */
+ {id:'f1',bk:2,town:'frost',t:'The Winter Fair',hint:'Open your first shop in Vienna',when:function(){return sgOwn(0)},g:3,L:[
+  [0,'Cold hands? Take a punch. Cinnamon, orange and a secret. The secret is more cinnamon.'],
+  [0,'A brass frame, Venetian glass and a sealed letter? Ach, you look like a pocket full of somebody else’s story.']]},
+ {id:'f2',bk:2,town:'frost',t:'Gone looking',hint:'Open 3 shops',when:function(){return sgShops()>=3},g:3,L:[
+  [2,'You want Professor Pim. He sells snow globes that hum. Some hum when you shake them. Some hum when you don’t.'],
+  [3,'But his shop has been closed a week. There’s a sign on the door. “Gone looking.” Looking for what, nobody knows. Mustard?']]},
+ {id:'f3',bk:2,town:'frost',t:'A notebook of addresses',hint:'Open the Snow Globe Shop',when:function(){return sgOwn(5)},g:6,L:[
+  ['n','You reopen the Snow Globe Shop to keep its lights on. On the counter lies an open notebook full of names and addresses.'],
+  ['n','Every name is someone who bought a snow globe from Pim around 1982. Every one has been crossed out. All but the last.'],
+  ['n','Tucked in the back cover, a page in a handwriting you know by now.'],
+  ['page','Pim built a heart for the lantern: a little music box that plays the waltz we danced to at the market. He is so proud of it he forgets to eat.\n\nI made him eat.']]},
+ {id:'f4',bk:2,town:'frost',t:'The stage door',hint:'Close for the night in Vienna',when:function(){return S.nights>=1},g:4,L:[
+  [6,'The old professor with the hair? I drove him last week. He was holding an address and muttering about a globe that sings.'],
+  [6,'I left him at the stage door of the Opera. He looked like a man on his way to apologise to a ghost. Hold on to your hat!']]},
+ {id:'f5',bk:2,town:'frost',t:'The Lantern Waltz',hint:'Open the Opera House',when:function(){return sgOwn(8)},g:10,piece:'heart',L:[
+  [8,'Pim? He has sat in my front row every night this week. Too shy to come backstage. Silly man.'],
+  [8,'I bought a humming snow globe at the fair when I was nineteen. It played a waltz nobody knew. I built my whole first season around it.'],
+  [5,'I sold it by mistake! Fifty years I have been looking for my own heart, and it was at the Opera the whole time. Ha! Ha… ha.'],
+  [8,'Then take it home, Professor. On one condition. Tonight, the whole fair dances.'],
+  ['n','The whole fair waltzes in the snow. Pim dances badly, and with enormous enthusiasm.']]},
+ {id:'f6',bk:2,town:'frost',t:'Only one person',hint:'Hire 7 managers in Vienna',when:function(){return sgMgrs()>=7},g:6,L:[
+  ['n','Pim finally opens the Count’s letter. He reads it twice. Then he takes off his glasses and cleans them for a very long time.'],
+  [5,'Alvise says he is sorry. Alvise. Sorry. The world is ending, or beginning. I can’t tell which.'],
+  [['card','tokyo'],'Mori never left the station.\nAsk the trains.\n{L}'],
+  [5,'Whoever writes these knows all of us. Too well.'],
+  [5,'…Only one person ever knew us that well. But she would never… no. No. Forget I said anything.']]},
+ {id:'f7',bk:2,town:'frost',t:'The night train east',hint:'Reach 10 million stars',when:function(){return G.stars>=1e7},g:10,L:[
+  [6,'To the station! Blankets for everyone. And for the professor, two.'],
+  [5,'I’m coming with you. I have a heart to deliver and a very old friend to shout at.'],
+  [5,'And on the way, you can tell me again about that cart in Tetovo. The one with five names.']]},
+
+ /* ---- Book IV: Tokyo ---- */
+ {id:'k1',bk:3,town:'tokyo',t:'Under the railway',hint:'Open your first shop in Tokyo',when:function(){return sgOwn(0)},g:3,L:[
+  [0,'Irasshai! Ramen first, questions later. That’s the rule under this bridge.'],
+  [0,'Mori, the old paper maker? Everybody here knows him. Nobody here knows where he lives.']]},
+ {id:'k2',bk:3,town:'tokyo',t:'Paper cranes',hint:'Open 3 shops',when:function(){return sgShops()>=3},g:3,L:[
+  [1,'Every morning there’s a paper crane on my cart. Perfect folds. No note. Never a note.'],
+  [1,'The old man who leaves them rides the first train out and the last train home. Careful, takoyaki is lava!']]},
+ {id:'k3',bk:3,town:'tokyo',t:'Ask the trains',hint:'Open the Bullet Train',when:function(){return sgOwn(7)},g:5,L:[
+  [7,'Mr Mori? He has held a season ticket for fifty years. Same platform every day. He meets the train from the west.'],
+  [7,'He never meets anybody. He waits until the last passenger has gone, folds a crane, and goes home.'],
+  ['n','Mori never left the station. Now you understand the postcard.']]},
+ {id:'k4',bk:3,town:'tokyo',t:'Fear in a nice coat',hint:'Close for the night in Tokyo',when:function(){return S.nights>=1},g:4,L:[
+  [2,'I knew Mori when we were young. In 1977 he came home from a winter in the mountains and said, “They will come in the spring. We promised.”'],
+  [2,'Nobody came. He thinks they forgot him. Not once did he think that maybe they were waiting too.'],
+  [2,'That is pride, dear. Pride is only fear in a nice coat.']]},
+ {id:'k5',bk:3,town:'tokyo',t:'The train from the west',hint:'Open the Sky Tower',when:function(){return sgOwn(8)},g:6,L:[
+  ['n','You find him on the platform at dawn, a paper crane in his hand, watching the train from the west pull in.'],
+  [8,'Besim’s brass. Alvise’s glass. Pim’s little heart. And you came on the train from the west.'],
+  [8,'Fifty years I waited here. I thought, if I leave, they will come and find nobody. That seemed the worst thing.'],
+  [8,'It was not. The worst thing was that I never once got on a train myself.']]},
+ {id:'k6',bk:3,town:'tokyo',t:'Four old men on a platform',hint:'Hire 7 managers in Tokyo',when:function(){return sgMgrs()>=7},g:15,piece:'shade',L:[
+  ['n','The train from the west arrives exactly on time. Pim steps off first, then stops. Behind him come two more old men. One is carrying a pot of beans.'],
+  [['lane',6],'You look terrible, Mori.'],
+  [8,'You brought beans. To Tokyo.'],
+  [['harbor',8],'He brings beans everywhere. It is his whole personality.'],
+  [['frost',5],'Gentlemen. Fifty years. Can we hug now, or do we need a committee?'],
+  ['n','They hug. It takes a long time. Kenji sets out four bowls of ramen and nobody says a word, because nobody needs to.'],
+  ['n','Then, one by one, all four of them take a postcard out of their coats. The same handwriting. The same little lantern.'],
+  [['frost',5],'So. Which one of you has been writing to the rest of us?'],
+  ['n','None of them has. The fifth name on the cart. Four old men turn and look west.']]},
+
+ /* ---- Epilogue: back on Lantern Lane ---- */
+ {id:'e1',bk:4,town:'lane',t:'The fifth name',hint:'Go home to Lantern Lane',when:function(){return true},g:15,L:[
+  ['n','The lane is quiet when four old travellers step off the bus from the pass. They are carrying the pieces of a lantern, and a stack of postcards.'],
+  ['n','Mama Hajrije is wiping down your cart as if it were any other night.'],
+  [0,'You took your time. Fifty years, almost to the day.'],
+  [['harbor',8],'The postcards. The journal pages. It was you. It was always you.'],
+  [0,'Somebody had to be brave. You four were too busy being proud. So I found someone new to push my cart, and I sent them to fetch you.'],
+  ['n','She means you.'],
+  ['page','If you are reading this, you are the one I chose to bring them home. Thank you.\n\nDon’t tell them it was me until the very end. They will only argue.\n— H.']]},
+ {id:'e2',bk:4,town:'lane',t:'The First Lantern',hint:'Stay for one more night',when:function(){return true},g:50,fin:true,L:[
+  ['n','Brass from Besim. Glass from Alvise. A heart from Pim. Paper from Mori. And Hajrije’s cart, where it all began.'],
+  [0,'You light it, child. It was always going to be you.'],
+  ['n','It isn’t bright. It’s warm. There’s a difference.'],
+  ['n','The music box starts the waltz, and five old friends dance badly on Lantern Lane, exactly where they left off.'],
+  [['lane',6],'Next winter, we visit Venice. Then Vienna. Then Tokyo. We have fifty years of visiting to catch up on.'],
+  [['tokyo',8],'And this time, we all get on the train.']]}
+];
+var SAGA_BY_ID={};SAGA.forEach(function(b,i){b.n=i;SAGA_BY_ID[b.id]=b});
+var SAGA_ALL=false; /* the test game lets you replay every chapter from the story book */
+function sagaSeen(id){return !!(G.saga&&G.saga[id])}
+/* the story runs in order: the next unseen chapter plays when you are in its town and its moment has come */
+function firstUnseen(){for(var i=0;i<SAGA.length;i++) if(!sagaSeen(SAGA[i].id)) return SAGA[i];return null}
+function nextBeat(){var b=firstUnseen();return b&&b.town===G.town&&b.when()?b:null}
+var sagaLast=0;
+function sagaTick(){
+  if(G.set.story===false||G.tut<99) return;
+  if(Date.now()-sagaLast<25000) return;
+  if($('#sheet').classList.contains('on')||$('#twin')||$('#saga')||$('#night')||!G.story[G.town]) return;
+  var b=nextBeat();if(!b) return;
+  G.saga=G.saga||{};G.saga[b.id]=1;save();sagaLast=Date.now();
+  playBeat(b,true);
+}
+var SG_LANT='<svg class="sgsig" viewBox="0 0 20 26" aria-hidden="true"><path d="M10 1v3M6 4h8M5 7q5-4 10 0v12q-5 3-10 0z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/><path d="M10 10q-2 3 0 6q2-3 0-6z" fill="currentColor"/></svg>';
+function sgFace(t,i){var o=MGRS,d=TOWN_BY_ID[t];MGRS=d.mgrs;var r='<span class="sgp" style="--c1:'+d.shops[i].c1+';--c2:'+d.shops[i].c2+'">'+portrait(i)+'</span>';MGRS=o;return r}
+function sgTxt(x){return String(x).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/\n/g,'<br>').replace('{L}',SG_LANT)}
+function sgLine(b,ln){
+  var who=ln[0],txt=sgTxt(ln[1]);
+  if(who==='n') return '<div class="sgl sgn"><p>'+txt+'</p></div>';
+  if(who==='page') return '<div class="sgl sgc"><div class="sgpage"><i>A page from an old journal</i><p>'+txt+'</p></div></div>';
+  if(Array.isArray(who)&&who[0]==='card') return '<div class="sgl sgc"><div class="sgcard"><span class="sgst">'+townEmblem(who[1])+'</span><i>POSTCARD · '+TOWN_PLACE[who[1]].toUpperCase()+'</i><p>'+txt+'</p></div></div>';
+  var t=Array.isArray(who)?who[0]:b.town,i=Array.isArray(who)?who[1]:who,d=TOWN_BY_ID[t];
+  return '<div class="sgl sgs">'+sgFace(t,i)+'<div class="sgb"><b>'+d.shops[i].mgr+'</b><p>'+txt+'</p></div></div>';
+}
+function playBeat(b,fresh){
+  var bk=SAGA_BOOKS[b.bk],ch=SAGA.filter(function(x){return x.bk===b.bk}).indexOf(b)+1,nx=fresh&&!b.fin?SAGA[b.n+1]:null;
+  var w=document.createElement('div');w.id='saga';w.className='saga th-'+b.town;w.setAttribute('role','dialog');w.setAttribute('aria-modal','true');w.setAttribute('aria-label',b.t);
+  var lines=b.L.map(function(l,j){var h=sgLine(b,l),pv=j?b.L[j-1][0]:null;if(j&&JSON.stringify(pv)===JSON.stringify(l[0])&&typeof l[0]!=='string') h=h.replace('class="sgl sgs"','class="sgl sgs cont"');return h}).join('');
+  var rw=fresh&&b.g?'<span class="sgrw">+'+b.g+' '+gemSvg()+'</span>':'';
+  var pc=fresh&&b.piece?'<div class="sgpc">'+lanternArt(b.piece)+'<span><b>'+PIECE_NAME[b.piece]+'</b> added to the First Lantern</span></div>':'';
+  var tease=nx?'<div class="sgtease"><i>Next chapter</i><b>'+nx.t+'</b><span>'+(nx.town!==G.town?'In '+TOWN_PLACE[nx.town]+' · ':'')+nx.hint+'</span></div>':'';
+  w.innerHTML='<div class="sgc0"><div class="sgban"><svg viewBox="0 0 360 120" preserveAspectRatio="xMidYMid slice" aria-hidden="true">'+townThemeSvg(b.town,360,120)+'</svg>'+
+    '<div class="sgh"><i>'+bk.book+' · '+bk.name+(bk.book==='Epilogue'?'':' · Chapter '+ch)+'</i><h2>'+b.t+'</h2></div><button type="button" class="sgskip" data-sg="all">Skip</button></div>'+
+    '<div class="sgbody">'+lines+pc+tease+'</div><div class="sgfoot"><button type="button" class="sbtn primary" data-sg="next">Next</button></div></div>';
+  document.body.appendChild(w);
+  var L=w.querySelectorAll('.sgl'),k=0,extra=[w.querySelector('.sgpc'),w.querySelector('.sgtease')],btn=w.querySelector('[data-sg=next]');
+  function show(){
+    if(k<L.length){L[k].classList.add('on');k++;try{L[k-1].scrollIntoView({block:'end',behavior:'smooth'})}catch(e){}if(fresh) sfx(k===1?'chime':'tap');}
+    if(k>=L.length){extra.forEach(function(x){if(x) x.classList.add('on')});btn.innerHTML=(b.fin?'The end':'Continue')+rw;w.querySelector('.sgskip').hidden=true;
+      try{(extra[1]||extra[0]||L[L.length-1]).scrollIntoView({block:'end',behavior:'smooth'})}catch(e){}}
+  }
+  var done=false;
+  function close(){if(done) return;done=true;w.id='';w.style.pointerEvents='none';w.classList.remove('on');setTimeout(function(){w.remove()},250);
+    if(fresh){if(b.g) giveGems(b.g);toast((b.fin?'The Lantern Map, complete!':'Story: '+b.t)+(b.g?' · +'+b.g+(b.g===1?' diamond':' diamonds'):''));save();refreshUI()}}
+  w.addEventListener('click',function(e){
+    var a=e.target.closest('[data-sg]');
+    if(a&&a.dataset.sg==='all'){while(k<L.length) show();return}
+    if(k<L.length){show();return}
+    if(a&&a.dataset.sg==='next') close();
+  });
+  requestAnimationFrame(function(){w.classList.add('on');show()});
+}
+var PIECE_NAME={frame:'Besim’s brass frame',glass:'Alvise’s glass',heart:'Pim’s music-box heart',shade:'Mori’s paper shade'};
+function lanternArt(only){
+  var has=function(p){return only?only===p:sagaSeen({frame:'l7',glass:'h7',heart:'f5',shade:'k6'}[p])},lit=!only&&sagaSeen('e2'),o='';
+  o+='<svg viewBox="0 0 80 110" aria-hidden="true">';
+  if(lit) o+='<circle cx="40" cy="58" r="38" fill="rgba(255,200,90,.28)"/><circle cx="40" cy="58" r="24" fill="rgba(255,220,130,.35)"/>';
+  if(has('shade')) o+='<path d="M22 22Q40 8 58 22L62 30H18Z" fill="#f4e6c8" stroke="#c8a870" stroke-width="1"/><path d="M28 22v8M40 16v14M52 22v8" stroke="#d8c08a" stroke-width=".8"/><path d="M18 30h44" stroke="#e0362c" stroke-width="2"/>';
+  else o+='<path d="M22 22Q40 8 58 22L62 30H18Z" fill="none" stroke="rgba(255,255,255,.18)" stroke-dasharray="2 2"/>';
+  if(has('glass')) o+='<rect x="24" y="32" width="32" height="50" rx="2" fill="'+(lit?'#ffe9a8':'rgba(150,210,255,.45)')+'"/><path d="M26 36l6-4M26 46l10-8" stroke="#fff" stroke-opacity=".6" stroke-width="1.2"/>';
+  if(lit) o+='<path d="M40 70q-7-8 0-20q7 12 0 20z" fill="#ff9a3d"/><path d="M40 68q-3-4 0-10q3 6 0 10z" fill="#fff4b8"/>';
+  if(has('frame')) o+='<g fill="none" stroke="#d4a84a" stroke-width="2.4"><rect x="22" y="30" width="36" height="54" rx="3"/><path d="M40 30v54M22 57h36"/><path d="M40 30V14"/><circle cx="40" cy="10" r="4"/></g>';
+  else o+='<rect x="22" y="30" width="36" height="54" rx="3" fill="none" stroke="rgba(255,255,255,.18)" stroke-dasharray="2 2"/>';
+  if(has('heart')) o+='<rect x="26" y="86" width="28" height="12" rx="2" fill="#8a5a2a" stroke="#d4a84a" stroke-width="1.2"/><circle cx="40" cy="92" r="4" fill="none" stroke="#ffd45c" stroke-width="1.4"/><path d="M40 88v8M36 92h8" stroke="#ffd45c" stroke-width=".9"/>';
+  else o+='<rect x="26" y="86" width="28" height="12" rx="2" fill="none" stroke="rgba(255,255,255,.18)" stroke-dasharray="2 2"/>';
+  return o+'</svg>';
+}
+function openSagaBook(){
+  var nxt=firstUnseen();
+  var h='<div class="sgc0 sgbook"><div class="sgban"><svg viewBox="0 0 360 120" preserveAspectRatio="xMidYMid slice" aria-hidden="true">'+townThemeSvg(G.town,360,120)+'</svg>'+
+    '<div class="sgh"><i>The story so far</i><h2>The Lantern Map</h2></div><button type="button" class="sgskip" data-sb="x">Done</button></div><div class="sgbody">'+
+    '<div class="sglant">'+lanternArt()+'<p>'+(sagaSeen('e2')?'Five old friends, one warm light, exactly where they left off.':'Five names carved on an old cart. Four of them scratched out. Somebody wants you to find out why.')+'</p></div>';
+  SAGA_BOOKS.forEach(function(bk,bi){
+    var list=SAGA.filter(function(b){return b.bk===bi}),got=list.filter(function(b){return sagaSeen(b.id)}).length;
+    h+='<h3 class="sgbk"><span>'+bk.book+' · '+bk.name+'</span><em>'+TOWN_PLACE[bk.town]+' · '+got+'/'+list.length+'</em></h3><div class="group">';
+    list.forEach(function(b,ci){
+      var ok=sagaSeen(b.id)||SAGA_ALL,nx=nxt===b;
+      h+='<button type="button" class="sgrow'+(ok?'':' lk')+'" data-sb="'+b.id+'"'+(ok?'':' disabled')+'><span class="sgn0">'+(ci+1)+'</span><span class="sgtt"><b>'+(ok?b.t:'???')+'</b>'+(nx?'<i>Next: '+(b.town!==G.town?'in '+TOWN_PLACE[b.town]+', ':'')+b.hint.charAt(0).toLowerCase()+b.hint.slice(1)+'</i>':'')+'</span>'+(ok?'<span class="sgplay">▶</span>':'')+'</button>';
+    });
+    h+='</div>';
+  });
+  h+='<p class="foot">A new chapter appears as your towns grow. Story scenes can be switched off on the Stars tab.</p></div></div>';
+  var w=document.createElement('div');w.id='saga';w.className='saga th-'+G.town;w.setAttribute('role','dialog');w.setAttribute('aria-modal','true');w.setAttribute('aria-label','The Lantern Map');
+  w.innerHTML=h;document.body.appendChild(w);requestAnimationFrame(function(){w.classList.add('on')});
+  w.addEventListener('click',function(e){
+    var a=e.target.closest('[data-sb]');if(!a) return;
+    w.remove();if(a.dataset.sb!=='x') playBeat(SAGA_BY_ID[a.dataset.sb],false);
+  });
+}
+
 /* events: a seasonal fair in each town, plus a weekend market that rotates between the towns */
 var EVENTS=[
   {town:'lane',name:'Lantern Festival',a:[2,1],b:[3,1],m:2},
@@ -3915,17 +4350,17 @@ var PACKS=[
 /* ---------- skins: whole new looks for the buildings, the vehicles and the visitors ---------- */
 var SKINS=[
   {id:'classic',cat:'b',n:'Classic',d:'The night market as you know it',c:0,a:'#ffc24a',b:'#ff8a00'},
-  {id:'candy',cat:'b',n:'Candy Kingdom',d:'Gingerbread houses, layer cakes and cupcake homes',c:200,a:'#ff9ec4',b:'#e8508a'},
+  {id:'candy',cat:'b',n:'Candy Kingdom',d:'Gingerbread houses, layer cakes and cupcake homes',c:150,a:'#ff9ec4',b:'#e8508a'},
   {id:'glass',cat:'b',n:'Glass Towers',d:'Shiny glass skyscrapers with rooftop gardens',c:250,a:'#9fd8ff',b:'#2d6aa8'},
   {id:'sky',cat:'b',n:'Alien Market',d:'Saucers, rockets and space stations',c:300,a:'#7dffb0',b:'#b58cff'},
   {id:'classic',cat:'v',n:'Classic rides',d:'Standard buses, boats and trams',c:0,a:'#ff8a3d',b:'#38c6a5'},
-  {id:'v_candy',cat:'v',n:'Candy Carriages',d:'Gingerbread buses with frosting roofs',c:100,a:'#ff7ab0',b:'#c98a56'},
-  {id:'v_glass',cat:'v',n:'Hover Pods',d:'Sleek glass pods with neon trim',c:130,a:'#19e3ff',b:'#b58cff'},
-  {id:'v_ufo',cat:'v',n:'Flying Saucers',d:'Little saucers that hover over the streets',c:150,a:'#7dffb0',b:'#ff7ad9'},
+  {id:'v_candy',cat:'v',n:'Candy Carriages',d:'Gingerbread buses with frosting roofs',c:70,a:'#ff7ab0',b:'#c98a56'},
+  {id:'v_glass',cat:'v',n:'Hover Pods',d:'Sleek glass pods with neon trim',c:80,a:'#19e3ff',b:'#b58cff'},
+  {id:'v_ufo',cat:'v',n:'Flying Saucers',d:'Little saucers that hover over the streets',c:90,a:'#7dffb0',b:'#ff7ad9'},
   {id:'classic',cat:'p',n:'Everyday visitors',d:'Regular night-market crowd',c:0,a:'#59c7ff',b:'#ffd45c'},
-  {id:'p_robot',cat:'p',n:'Robots',d:'Beeping, boxy and very polite',c:100,a:'#b8c4dc',b:'#19e3ff'},
-  {id:'p_alien',cat:'p',n:'Aliens',d:'Visitors from far across the sky',c:120,a:'#8be37a',b:'#b58cff'},
-  {id:'p_pets',cat:'p',n:'Pets',d:'Cats, dogs and bunnies out for a stroll',c:90,a:'#ffb27a',b:'#f4e8d8'}
+  {id:'p_robot',cat:'p',n:'Robots',d:'Beeping, boxy and very polite',c:70,a:'#b8c4dc',b:'#19e3ff'},
+  {id:'p_alien',cat:'p',n:'Aliens',d:'Visitors from far across the sky',c:80,a:'#8be37a',b:'#b58cff'},
+  {id:'p_pets',cat:'p',n:'Pets',d:'Cats, dogs and bunnies out for a stroll',c:60,a:'#ffb27a',b:'#f4e8d8'}
 ];
 var SKCAT={b:'Building skins',v:'Vehicle skins',p:'Visitor skins'};
 function skHas(s){return s.id==='classic'||!!G.skins[s.id]}
@@ -4178,6 +4613,41 @@ function skIcon(id){
   p_pets:W+'<path d="M9 8l5 8h-8z" fill="#c98a56"/><path d="M31 8l-5 8h8z" fill="#c98a56"/><circle cx="20" cy="22" r="12" fill="#e8b27a"/><circle cx="15.5" cy="20" r="1.8" fill="#2a2038"/><circle cx="24.5" cy="20" r="1.8" fill="#2a2038"/><ellipse cx="20" cy="25" rx="3" ry="2.2" fill="#2a2038"/><path d="M20 27v2M17 29q3 2 6 0" stroke="#2a2038" stroke-width="1.3" fill="none" stroke-linecap="round"/>'+E};
   return o[id]||''
 }
+
+/* theme sets: a building, a vehicle and a visitor skin together, for diamonds (about 20% off) or real money.
+   The first set bought with money is a one-time welcome offer at $0.99. */
+var SETS=[
+ {k:'candy',n:'Candy set',ids:['candy','v_candy','p_pets'],gem:220},
+ {k:'glass',n:'Glass City set',ids:['glass','v_glass','p_robot'],gem:320},
+ {k:'sky',n:'Alien set',ids:['sky','v_ufo','p_alien'],gem:380}
+];
+var SET_PRICE='$1.99',SET_WELCOME='$0.99';
+function setSkins(st){return st.ids.map(function(id){return SKINS.filter(function(x){return x.id===id})[0]})}
+function setOwned(st){return setSkins(st).filter(skHas).length}
+function setFull(st){return setSkins(st).reduce(function(a,x){return a+x.c},0)}
+function setGemCost(st){var have=setSkins(st).filter(skHas).reduce(function(a,x){return a+x.c},0);return Math.max(0,Math.round(st.gem*(1-have/setFull(st))))}
+function setGive(st){setSkins(st).forEach(function(x){G.skins[x.id]=1;G.sk[x.cat]=x.id})}
+function setsHtml(){
+  var wel=!G.setWel;
+  return '<h2 class="hd">Theme sets</h2><div class="group">'+SETS.map(function(st){
+    var own=setOwned(st),all=own===3,sk=setSkins(st),b=sk[0];
+    var names=sk.map(function(x){return x.n}).join(' + ');
+    var btns=all?'<span class="rwd done">Owned</span>':
+      '<span class="setb"><button type="button" class="gbtn gem" data-ba="setg" data-k="'+st.k+'">'+gemSvg()+setGemCost(st)+'</button>'+
+      (own?'':'<button type="button" class="gbtn price'+(wel?' wel':'')+'" data-ba="setm" data-k="'+st.k+'">'+(wel?'<s>'+SET_PRICE+'</s> '+SET_WELCOME:SET_PRICE)+'</button>')+'</span>';
+    return '<div class="brow"><span class="skchip ic" style="background:linear-gradient(135deg,'+b.a+'55,'+b.b+'55)">'+skIcon(b.id)+'</span><div class="bi"><div class="bnm">'+st.n+
+      (all?'':' <span class="dgt t1">'+(own?'You own '+own+' of 3':'Save '+Math.round(100-st.gem/setFull(st)*100)+'%')+'</span>')+'</div><div class="bsub">'+names+'</div></div>'+btns+'</div>';
+  }).join('')+'</div>'+(wel&&SETS.some(function(st){return !setOwned(st)})?'<p class="foot">Welcome offer: your first set bought with money is '+SET_WELCOME+' instead of '+SET_PRICE+'. Once only.</p>':'');
+}
+function askSetMoney(st){
+  var wel=!G.setWel,price=wel?SET_WELCOME:SET_PRICE,live=!!(window.LL_BILLING&&window.LL_BILLING.buy);
+  openSheet({title:st.n,big:price,
+    msg:setSkins(st).map(function(x){return x.n}).join(', ')+'. Yours forever, equipped straight away.'+(wel?' Welcome offer: half price, once only.':'')+' '+(live?'You will be charged '+price+' through your store account.':'Test mode: no real payment is taken. In the app this button charges '+price+' through your store account.'),
+    actions:[{label:'Buy for '+price,kind:'primary',fn:function(){billingBuy({id:'set_'+st.k+(wel?'_welcome':'')},function(){
+      G.setWel=1;setGive(st);save();rebuildTown();sfx('fanfare');toast(st.n+' unlocked and equipped!');if(G.tab==='boosts') renderBoosts();refreshUI();
+    })}}]
+  });
+}
 function sinkHtml(){
   var L=G.bless,mx=BLESS.length,cost=BLESS[L];
   var h='<h2 class="hd">Lantern Blessing</h2><div class="group"><div class="brow"><span class="gico gold"><svg class="pic" viewBox="0 0 32 32" aria-hidden="true"><circle cx="16" cy="16" r="13" fill="url(#icGold)" stroke="rgba(70,35,10,.45)" stroke-width=".9"/><path d="M16 8l2.4 5 5.4.7-4 3.8 1 5.4L16 20.2 11.2 23l1-5.4-4-3.8 5.4-.7z" fill="#fff" opacity=".9"/></svg></span>'+
@@ -4185,6 +4655,7 @@ function sinkHtml(){
     (L>=mx?'<span class="rwd done">Max</span>':'<button type="button" class="gbtn gem" data-ba="bless" data-cost="'+cost+'">'+gemSvg()+cost+'</button>')+'</div>'+
     '<div class="brow"><span class="gico blue"><svg class="pic" viewBox="0 0 32 32" aria-hidden="true"><path d="M16 3v4M9 10h14l1.5 14a3 3 0 0 1-3 3.2h-11a3 3 0 0 1-3-3.2z" fill="url(#icRed)" stroke="rgba(70,35,10,.45)" stroke-width=".9" stroke-linejoin="round"/></svg></span><div class="bi"><div class="bnm">Call a golden lantern</div><div class="bsub">Sends one drifting over the market right now</div></div>'+
     '<button type="button" class="gbtn gem" data-ba="call" data-cost="6">'+gemSvg()+'6</button></div></div>';
+  h+=setsHtml();
   ['b','v','p'].forEach(function(cat){
     h+='<h2 class="hd">'+SKCAT[cat]+'</h2><div class="group">'+SKINS.filter(function(s){return s.cat===cat}).map(function(s){
       var own=skHas(s),cur=G.sk[cat]===s.id;
@@ -4194,6 +4665,14 @@ function sinkHtml(){
   });
   return h;
 }
+/* watch an ad for 5 diamonds, 3 times a day, resets at midnight; not part of the free-diamond limit */
+var WAD_N=3,WAD_G=5;
+function wadLeft(){if(!G.wad||G.wad.d!==dayKey(0)) G.wad={d:dayKey(0),n:0};return Math.max(0,WAD_N-G.wad.n)}
+function untilMidnight(){var d=new Date();d.setHours(24,0,0,0);var s=Math.max(0,Math.round((d-Date.now())/1000)),h=Math.floor(s/3600),m=Math.floor(s%3600/60);return h?h+'h '+m+'m':m+'m'}
+function wadHtml(){var l=wadLeft(),nf=adFree();
+  return '<div class="brow" id="wadRow"><span class="gico blue">'+gemSvg()+'</span><div class="bi"><div class="bnm">Free diamonds</div><div class="bsub" id="wadSub">'+
+    (l?(nf?'Yours to collect, no ad needed':'Watch a short ad')+' \u00b7 '+l+' of '+WAD_N+' left today':'All collected. More in '+untilMidnight())+'</div></div>'+
+    '<button type="button" class="gbtn" data-ba="wad"'+(l?'':' disabled')+'>'+(l?'+'+WAD_G+' '+gemSvg():'Done')+'</button></div>';}
 function freeHtml(){var u=FREE_CAP-freeLeft();return '<p class="foot" id="freeMeter">Free diamonds today: '+u+' of '+FREE_CAP+' (gift, goals, requests and lanterns). Resets at midnight.</p>'}
 function retroHtml(){
   var own=!!G.r8;
@@ -4235,6 +4714,7 @@ function billingBuy(k,done){
 /* The app's billing bridge calls this for purchases it finds without a pending buy: restores, reinstalls, or a buy the app was closed during. */
 window.LL_GRANT=function(sku){
   if(sku===R8_SKU){if(!G.r8){G.r8=1;save();applyRetro();rebuildTown();toast('8-Bit Retro Pack restored')}}
+  else if(/^set_/.test(sku)){var sr=SETS.filter(function(x){return sku.indexOf('set_'+x.k)===0})[0];if(sr&&setOwned(sr)<3){G.setWel=1;setGive(sr);save();rebuildTown();toast(sr.n+' restored')}}
   else if(sku===NOADS_SKU){if(!G.noads){G.noads=1;window.LL_NOADS=true;save();toast('No Ads restored')}}
   else{var k=PACKS.filter(function(x){return x.id===sku})[0];if(k){giveGems(k.n);save();toast('+'+k.n.toLocaleString('en-US')+' diamonds')}}
   if(G.tab==='boosts') renderBoosts();refreshUI();
@@ -4368,7 +4848,7 @@ function renderBoosts(){
   h+=freeHtml();
   h+='<h2 class="hd">Daily gift</h2><div class="group"><div class="brow"><span class="gico gold"><svg class="pic" viewBox="0 0 32 32" aria-hidden="true"><rect x="5" y="13" width="22" height="14" rx="2.4" fill="url(#icRed)" stroke="rgba(70,35,10,.45)" stroke-width=".9" stroke-linejoin="round"/><rect x="3.5" y="9.4" width="25" height="5.4" rx="2" fill="#ff8a8e" stroke="rgba(70,35,10,.45)" stroke-width=".9" stroke-linejoin="round"/><rect x="14" y="9.4" width="4" height="17.6" fill="url(#icGold)"/><path d="M16 9.4c-3-5-8-4.4-7-1.2 1 2 5 1.2 7 1.2zM16 9.4c3-5 8-4.4 7-1.2-1 2-5 1.2-7 1.2z" fill="url(#icGold)" stroke="rgba(70,35,10,.45)" stroke-width=".9" stroke-linejoin="round"/></svg></span>'+
     '<div class="bi"><div class="bnm">'+(rd?'Your gift is ready':'Come back tomorrow')+'</div><div class="bsub" id="bgDaily">'+(rd?'Day '+nx+' of your streak':'Streak: '+G.daily.streak+(G.daily.streak===1?' day':' days'))+'. Day 7 pays 10 diamonds.</div></div>'+
-    '<button type="button" class="gbtn" data-ba="daily"'+(rd?'':' disabled')+'>'+(rd?'+'+dailyReward(nx)+' '+gemSvg():'Claimed')+'</button></div>'+ladderHtml(rd,nx)+'</div>'+dgHtml();
+    '<button type="button" class="gbtn" data-ba="daily"'+(rd?'':' disabled')+'>'+(rd?'+'+dailyReward(nx)+' '+gemSvg():'Claimed')+'</button></div>'+ladderHtml(rd,nx)+wadHtml()+'</div>'+dgHtml();
   h+='<h2 class="hd">Running now</h2><div class="group" id="bgActive"></div>';
   h+='<h2 class="hd">Free boost</h2><div class="group"><div class="brow"><span class="gico gold"><svg class="pic" viewBox="0 0 32 32" aria-hidden="true"><rect x="4" y="7" width="24" height="18" rx="4" fill="url(#icGold)" stroke="rgba(70,35,10,.45)" stroke-width=".9"/><path d="M13 11.5v9l8-4.500z" fill="#fff"/></svg></span><div class="bi"><div class="bnm">Double profit · 10 minutes</div><div class="bsub">'+(adFree()?'Free with No Ads. Stacks up to 1 hour.':'Watch a short ad. Stacks up to 1 hour.')+'</div></div><button type="button" class="gbtn" data-ba="adfx">'+adWord()+'</button></div></div>';
   h+='<h2 class="hd">Spend diamonds</h2><div class="group">';
@@ -4406,6 +4886,9 @@ $('#boostBody').addEventListener('click',function(e){
   var a=b.dataset.ba;
   if(a==='bless'){var bc=BLESS[G.bless];if(G.bless>=BLESS.length||G.diamonds<bc) return;G.diamonds-=bc;G.bless++;recalc();sfx('chime');toast('Lantern Blessing: +'+(G.bless*5)+'% profit forever');save();renderBoosts();refreshUI();return}
   if(a==='call'){if(G.diamonds<6||lantEl) {if(lantEl) toast('A lantern is already out. Find it on the Shops map');return}G.diamonds-=6;setTab('shops');setTimeout(spawnLantern,300);sfx('lantern');save();refreshUI();return}
+  if(a==='setg'){var sg=SETS.filter(function(x){return x.k===b.dataset.k})[0];if(!sg) return;var sc=setGemCost(sg);if(G.diamonds<sc){toast('You need '+sc+' diamonds');return}
+    G.diamonds-=sc;setGive(sg);sfx('fanfare');rebuildTown();toast(sg.n+' unlocked and equipped!');save();renderBoosts();refreshUI();return}
+  if(a==='setm'){var sm=SETS.filter(function(x){return x.k===b.dataset.k})[0];if(sm) askSetMoney(sm);return}
   if(a==='skin'){var sk=SKINS.filter(function(s){return s.id===b.dataset.id&&s.cat===b.dataset.cat})[0];if(!sk) return;
     if(!skHas(sk)){if(G.diamonds<sk.c) return;G.diamonds-=sk.c;G.skins[sk.id]=1;sfx('fanfare')}
     G.sk[sk.cat]=sk.id;rebuildTown();toast(sk.n+' equipped');save();renderBoosts();refreshUI();return}
@@ -4424,6 +4907,7 @@ $('#boostBody').addEventListener('click',function(e){
     giveFree(q.g+bonus);
     save();renderBoosts();refreshUI();return;
   }
+  if(a==='wad'){if(!wadLeft()) return;showRewardedAd(function(){if(!wadLeft()) return;G.wad.n++;giveGems(WAD_G);toast('+'+WAD_G+' diamonds \u00b7 '+wadLeft()+' left today');save();renderBoosts()});return}
   if(a==='daily'){
     if(!dailyReady()) return;
     var st=dailyNext();G.daily={d:dayKey(0),streak:st};var r=dailyReward(st),gr=giveFree(r);
@@ -4708,7 +5192,9 @@ function showRewardedAd(cb){
 
 /* ---------- main loop ---------- */
 var last=G.t,lastCash='',uiT=0,achT=0,pfN=0,pfT=0,pfLow=0;
+var lastFrame=0;
 function loop(){
+  var pn=performance.now();if(pn-lastFrame<(perfLow?48:31)){requestAnimationFrame(loop);return}lastFrame=pn;
   var now=Date.now(),dt=(now-last)/1000;last=now;
   if(!(dt>0)) dt=0;
   if(dt>3){
@@ -4719,10 +5205,10 @@ function loop(){
   var c=money(S.cash);
   if(c!==lastCash){$('#cash').textContent=c;lastCash=c}
   if(G.tab==='shops'){frameShops();moveFolk(Math.min(dt,.1))}
-  if(!perfLow&&!perfSet&&G.tab==='shops'&&!document.hidden&&dt>0&&dt<1){pfN++;pfT+=dt;if(pfT>=4){if(pfN/pfT<34) pfLow++;else pfLow=0;pfN=0;pfT=0;
+  if(!perfLow&&!perfSet&&G.tab==='shops'&&!document.hidden&&dt>0&&dt<1){pfN++;pfT+=dt;if(pfT>=4){if(pfN/pfT<21) pfLow++;else pfLow=0;pfN=0;pfT=0;
     if(pfLow>=3){perfLow=true;try{localStorage.setItem('lanternLane.perfLow','1')}catch(e){}$('#map').classList.add('lite');toast('Smooth mode on: fewer effects for this phone')}}}
   if(G.tab==='shops'&&!document.hidden&&dt<1&&!$('#sheet').classList.contains('on')){lantT+=dt;if(lantT>=lantNext&&!lantEl) spawnLantern();reqT+=dt;if(!G.req&&S.lifetime>0&&reqT>=reqNext) makeRequest();fwT+=dt;if(fwT>=fwNext){fwT=0;fwNext=5+Math.random()*5;if(everyMult()>1) spawnFirework()}}
-  if(now-uiT>120){uiT=now;updateFx();updateReq();spRender();refreshUI();if(now-achT>1500){achT=now;checkAch()}}
+  if(now-uiT>250){uiT=now;updateFx();updateReq();spRender();refreshUI();if(now-achT>1500){achT=now;checkAch()}}
   requestAnimationFrame(loop);
 }
 
@@ -4730,7 +5216,19 @@ function loop(){
 document.addEventListener('touchstart',function(){},{passive:true});
 document.addEventListener('visibilitychange',function(){if(document.hidden) save()});
 window.addEventListener('pagehide',save);
-setInterval(save,4000);
+setInterval(save,10000);
+/* battery: pause map animations when the map is off screen or a window covers it, and pause sound while hidden */
+(function(){
+  var m=$('#map');
+  if(m&&'IntersectionObserver' in window) new IntersectionObserver(function(es){es.forEach(function(e){m.classList.toggle('zz',!e.isIntersecting)})},{threshold:0}).observe(m);
+  setInterval(function(){var o=!!($('#sheet').classList.contains('on')||$('#saga')||$('#night')||$('#twin'));if(document.body.classList.contains('ovl')!==o) document.body.classList.toggle('ovl',o)},500);
+  document.addEventListener('visibilitychange',function(){
+    if(!AU.ctx) return;
+    try{if(document.hidden) AU.ctx.suspend();else if(G.set.music||G.set.sfx) AU.ctx.resume()}catch(e){}
+  });
+})();
+
+setInterval(function(){try{sagaTick()}catch(e){}},3000);
 buildShops();buildMap();buildFolkGraph();buildStars();renderBoosts();
 $('#townName').textContent=T.name;
 setBuy(G.buy,true);
