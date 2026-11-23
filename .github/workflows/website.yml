@@ -1,5 +1,7 @@
 name: Publish the web version
 
+# Copies the game in www/ to the gh-pages branch, which GitHub Pages serves at
+# https://harisaliuu05-dev.github.io/pop/ . Runs by itself whenever the game changes.
 on:
   workflow_dispatch:
   push:
@@ -7,25 +9,17 @@ on:
     paths: ['www/**']
 
 permissions:
-  contents: read
-  pages: write
-  id-token: write
-
-concurrency:
-  group: pages
-  cancel-in-progress: true
+  contents: write
 
 jobs:
-  deploy:
+  publish:
     runs-on: ubuntu-latest
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
     steps:
       - uses: actions/checkout@v4
-      - uses: actions/configure-pages@v5
-      - uses: actions/upload-pages-artifact@v3
+      - run: touch www/.nojekyll
+      - uses: peaceiris/actions-gh-pages@v4
         with:
-          path: www
-      - id: deployment
-        uses: actions/deploy-pages@v4
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./www
+          publish_branch: gh-pages
+          force_orphan: true

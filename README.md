@@ -27,7 +27,7 @@ Replace `www/index.html` with the new game file (same name) and upload it. The b
 
 ## Play in the browser (always the newest version)
 
-Turn this on once: repository **Settings**, then **Pages**, then under "Build and deployment" set **Source** to **GitHub Actions**.
+If the link below shows a 404, turn it on once: repository **Settings**, then **Pages**, then under "Build and deployment" choose **Deploy from a branch**, branch **gh-pages**, folder **/ (root)**, and Save.
 After that, every change to the game publishes it here automatically:
 
 `https://harisaliuu05-dev.github.io/pop/`
