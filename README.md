@@ -25,15 +25,34 @@ The game saves on the phone, works without internet and is locked to portrait.
 
 Replace `www/index.html` with the new game file (same name) and upload it. The build runs again by itself.
 
-## Not done yet
+## What the app does
 
-- **Play Store release.** This APK is a test build signed with a debug key. For the Play Store you need a Google Play developer account, a signing key and an app bundle (.aab). The same workflow can be extended for that.
-- **Real purchases and ads.** The diamond store and the ads run in test mode. The store needs a billing plugin that sets `window.LL_BILLING = { buy(sku, done), restore(done) }`. The 8-Bit Retro Pack (`retro_pack_8bit`, $2.99) and No Ads (`no_ads`, $4.99) are one-time products. When No Ads is owned the game sets `window.LL_NOADS = true`, so the app should then show no other ads; the other products are the diamond packs `gems_80`, `gems_450`, `gems_1000` and `gems_2600`. Ads need a rewarded-ads plugin that sets `window.LL_ADS = { show(done) }` and calls `done(true)` when the reward is earned.
+- **Save backup.** The save is copied into Android's app storage, which Android Backup sends to the player's Google account. On a new phone or after a reinstall the save comes back.
+- **Notifications.** When the player leaves, reminders are scheduled for 2 hours, 1 day and 3 days later. They are cancelled when the player comes back.
+- **Rewarded ads.** AdMob. Until you add your own ids it shows Google's test ads, so it is safe to try.
+- **Purchases.** Google Play Billing for the 8-Bit Retro Pack (`retro_pack_8bit`), No Ads (`no_ads`) and the diamond packs (`gems_80`, `gems_450`, `gems_1000`, `gems_2600`). The Restore button gives back one-time purchases.
+
+All of this lives in `www/bridge.js` and only runs inside the app. In a normal browser the game stays in test mode.
+
+## Putting it on the Play Store
+
+1. **Signing key.** Add four repository secrets (Settings, then Secrets and variables, then Actions): `KEYSTORE_BASE64`, `KEYSTORE_PASSWORD`, `KEY_ALIAS`, `KEY_PASSWORD`. From then on every build also makes `app-release.aab`, under the run's **Artifacts** in the Actions tab. Keep the key file safe and never put it in this repository.
+2. **Google Play Console** ($25 one-time, play.google.com/console). Create the app, turn on Play App Signing, and upload `app-release.aab` to **Internal testing** first.
+3. **In-app products.** In Play Console, under Monetize, create these products with these exact ids:
+   - one-time, non-consumable: `retro_pack_8bit` ($2.99), `no_ads` ($4.99)
+   - consumable: `gems_80` ($0.99), `gems_450` ($4.99), `gems_1000` ($9.99), `gems_2600` ($24.99)
+4. **AdMob** (admob.google.com). Add the app and make one **Rewarded** ad unit. Then add two repository variables (Settings, then Secrets and variables, then Actions, then Variables): `ADMOB_APP_ID` (looks like `ca-app-pub-…~…`) and `ADMOB_REWARDED_ID` (looks like `ca-app-pub-…/…`). Real ads switch on with the next build.
+5. **Store listing.** Fill in the description, screenshots, content rating, the data safety form (the app shows ads and has purchases, and stores no personal data), and the privacy policy link: `https://github.com/harisaliuu05-dev/pop/blob/main/PRIVACY.md`.
+
+## Still to do
+
 - **Fonts offline.** The handwritten map labels use Google Fonts and fall back to a similar font when the phone is offline. Bundling the fonts into `www/` fixes that.
 
 ## What is inside
 
 - `www/index.html`: the game
+- `www/bridge.js`: billing, ads, notifications and save backup for the app
+- `PRIVACY.md`: privacy policy for the store listing
 - `capacitor.config.json`: app name (Lantern Lane) and id (`com.lanternlane.game`). Change the id before publishing if you want your own.
 - `assets/`: app icon and splash screen
 - `.github/workflows/build-apk.yml`: the build recipe
