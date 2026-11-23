@@ -618,6 +618,40 @@ html.r8 .sgh h2,html.r8 .sgcard p{font-family:var(--font-num);font-size:16px;lin
 
 .setb{display:flex;flex-direction:column;gap:6px;align-items:stretch;flex:none}
 .gbtn.price.wel s{opacity:.6;font-weight:600;margin-right:2px}
+
+/* title screen */
+.ttl{position:fixed;inset:0;z-index:90;display:flex;flex-direction:column;align-items:center;justify-content:center;overflow:hidden;color:#fff6e4;
+  background:linear-gradient(180deg,#0e0826 0%,#2a1450 45%,#6a2a5a 80%,#a8465a 100%);opacity:0;transition:opacity .35s ease;
+  padding:calc(env(safe-area-inset-top,0px) + 20px) 24px calc(env(safe-area-inset-bottom,0px) + 20px)}
+.ttl.th-harbor{background:linear-gradient(180deg,#06122e 0%,#0b2a5a 50%,#14538a 85%,#1d6a9a 100%)}
+.ttl.th-frost{background:linear-gradient(180deg,#0e123a 0%,#1d2362 45%,#4a5ea8 85%,#7f96d0 100%)}
+.ttl.th-tokyo{background:linear-gradient(180deg,#08041a 0%,#1a0a32 45%,#4a1250 85%,#7a1a5a 100%)}
+.ttl.on{opacity:1}.ttl.out{opacity:0;transition:opacity .45s ease}
+.ttl.out .ttlc{transform:scale(1.06);transition:transform .45s ease}
+.ttlbg{position:absolute;inset:0;width:100%;height:100%;opacity:.75}
+.ttlst{position:absolute;inset:0}.ttlst b{position:absolute;width:2px;height:2px;border-radius:50%;background:#fff;opacity:.3;animation:twinkle 3s ease-in-out infinite}
+.ttlfly{position:absolute;inset:0;pointer-events:none}
+.ttlfly i{position:absolute;bottom:-40px;width:14px;height:18px;border-radius:40% 40% 35% 35%;background:radial-gradient(circle at 50% 60%,#fff2b8,#ffb347 55%,#e0562c);
+  box-shadow:0 0 14px 4px rgba(255,170,70,.45);transform:scale(var(--s));animation:ttlrise 14s linear infinite;will-change:transform}
+@keyframes ttlrise{from{transform:translate3d(0,0,0) scale(var(--s))}50%{transform:translate3d(14px,-55vh,0) scale(var(--s))}to{transform:translate3d(-8px,-115vh,0) scale(calc(var(--s)*.7))}}
+.ttlc{position:relative;z-index:1;display:flex;flex-direction:column;align-items:center;text-align:center;gap:6px;max-width:420px;width:100%}
+.ttll{width:92px;height:138px;transform-origin:50% 0;animation:ttlsw 4s ease-in-out infinite;filter:drop-shadow(0 0 24px rgba(255,170,70,.55))}
+@keyframes ttlsw{0%,100%{transform:rotate(-4deg)}50%{transform:rotate(4deg)}}
+.ttl h1{margin:6px 0 0;font-family:"Caveat","Segoe Script","Bradley Hand",cursive;font-weight:700;font-size:clamp(48px,14.5vw,72px);line-height:1;letter-spacing:.01em;
+  color:#ffe6b0;text-shadow:0 0 22px rgba(255,170,70,.55),0 3px 0 rgba(60,20,40,.6)}
+.ttls{margin:0;font-size:14px;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,236,210,.75);font-weight:700}
+.ttlgo{margin-top:26px;width:min(100%,280px);height:58px;border:0;border-radius:18px;font:inherit;font-size:19px;font-weight:800;color:#2a1205;
+  background:linear-gradient(180deg,#ffd45c,#ff8a3d);box-shadow:0 10px 30px rgba(255,140,50,.45),inset 0 -3px 0 rgba(120,40,0,.25);animation:wbg 1.8s ease-in-out infinite}
+.ttlgo:active{transform:scale(.97)}
+h2.hd{scroll-margin-top:calc(env(safe-area-inset-top,0px) + 96px)}
+.ttlb{display:flex;gap:10px;width:min(100%,280px);margin-top:12px}
+.ttl2{flex:1;display:flex;align-items:center;justify-content:center;gap:7px;height:46px;border:0;border-radius:14px;font:inherit;font-size:15px;font-weight:700;color:#fff2dc;
+  background:rgba(255,255,255,.12);box-shadow:inset 0 0 0 1px rgba(255,236,210,.28)}
+.ttl2 svg{width:19px;height:19px}.ttl2:active{transform:scale(.97)}
+.ttlw{margin:10px 0 0;font-size:14px;color:rgba(255,236,210,.8);text-wrap:balance}
+.ttlf{position:absolute;bottom:calc(env(safe-area-inset-bottom,0px) + 14px);left:0;right:0;margin:0;text-align:center;font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,236,210,.5)}
+html.r8 .ttl h1{font-family:var(--font-num);font-size:34px;line-height:1.3}
+@media (prefers-reduced-motion:reduce){.ttlfly,.ttll,.ttlgo,.ttlst b{animation:none}}
 /* Town picker as its own full-screen window */
 .twin{position:fixed;inset:0;z-index:60;display:flex;flex-direction:column;align-items:stretch;overscroll-behavior:contain;touch-action:none;
   padding:calc(env(safe-area-inset-top,0px) + 8px) max(12px,env(safe-area-inset-left,0px)) calc(env(safe-area-inset-bottom,0px) + 12px) max(12px,env(safe-area-inset-right,0px));
@@ -4125,7 +4159,7 @@ var sagaLast=0;
 function sagaTick(){
   if(G.set.story===false||G.tut<99) return;
   if(Date.now()-sagaLast<25000) return;
-  if($('#sheet').classList.contains('on')||$('#twin')||$('#saga')||$('#night')||!G.story[G.town]) return;
+  if($('#sheet').classList.contains('on')||$('#twin')||$('#saga')||$('#night')||$('#title')||!G.story[G.town]) return;
   var b=nextBeat();if(!b) return;
   G.saga=G.saga||{};G.saga[b.id]=1;save();sagaLast=Date.now();
   playBeat(b,true);
@@ -5221,7 +5255,7 @@ setInterval(save,10000);
 (function(){
   var m=$('#map');
   if(m&&'IntersectionObserver' in window) new IntersectionObserver(function(es){es.forEach(function(e){m.classList.toggle('zz',!e.isIntersecting)})},{threshold:0}).observe(m);
-  setInterval(function(){var o=!!($('#sheet').classList.contains('on')||$('#saga')||$('#night')||$('#twin'));if(document.body.classList.contains('ovl')!==o) document.body.classList.toggle('ovl',o)},500);
+  setInterval(function(){var o=!!($('#sheet').classList.contains('on')||$('#saga')||$('#night')||$('#twin')||$('#title'));if(document.body.classList.contains('ovl')!==o) document.body.classList.toggle('ovl',o)},500);
   document.addEventListener('visibilitychange',function(){
     if(!AU.ctx) return;
     try{if(document.hidden) AU.ctx.suspend();else if(G.set.music||G.set.sfx) AU.ctx.resume()}catch(e){}
@@ -5229,7 +5263,42 @@ setInterval(save,10000);
 })();
 
 setInterval(function(){try{sagaTick()}catch(e){}},3000);
+
+/* ---------- title screen: shown each time the game opens ---------- */
+function showTitle(){
+  var w=document.createElement('div');w.id='title';w.className='ttl th-'+G.town;w.setAttribute('role','dialog');w.setAttribute('aria-modal','true');w.setAttribute('aria-label','Lantern Lane');
+  var fresh=!G.stars&&!Object.keys(G.towns).some(function(k){return G.towns[k].lifetime>0}),nights=0;
+  Object.keys(G.towns).forEach(function(k){nights+=G.towns[k].nights||0});
+  var sub=fresh?'Your first night market is waiting':'Welcome back · '+T.name+' · '+fmt(G.stars)+' ★'+(nights?' · '+nights+(nights===1?' night':' nights'):'');
+  var fly='';for(var i=0;i<9;i++) fly+='<i style="left:'+(6+i*11+(i%2?3:-2))+'%;animation-delay:-'+(i*1.7).toFixed(1)+'s;animation-duration:'+(11+(i*7)%6)+'s;--s:'+(.6+(i*37%40)/100).toFixed(2)+'"></i>';
+  var stars='';for(i=0;i<30;i++) stars+='<b style="left:'+((i*53+7)%100)+'%;top:'+((i*31+11)%55)+'%;animation-delay:-'+((i*0.37)%3).toFixed(2)+'s"></b>';
+  w.innerHTML='<svg class="ttlbg" viewBox="0 0 360 640" preserveAspectRatio="xMidYMax slice" aria-hidden="true">'+townThemeSvg(G.town,360,640)+'</svg>'+
+    '<div class="ttlst" aria-hidden="true">'+stars+'</div><div class="ttlfly" aria-hidden="true">'+fly+'</div>'+
+    '<div class="ttlc">'+
+      '<svg class="ttll" viewBox="0 0 80 120" aria-hidden="true"><defs><radialGradient id="tlg" cx=".5" cy=".55" r=".6"><stop offset="0" stop-color="#fff4c8"/><stop offset=".55" stop-color="#ffb347"/><stop offset="1" stop-color="#e0362c"/></radialGradient></defs>'+
+        '<path d="M40 0v14" stroke="#3a2418" stroke-width="2"/><circle cx="40" cy="62" r="40" fill="rgba(255,190,90,.22)"/>'+
+        '<rect x="30" y="14" width="20" height="8" rx="2" fill="#3a2418"/><ellipse cx="40" cy="58" rx="26" ry="34" fill="url(#tlg)"/>'+
+        '<path d="M22 40q18-8 36 0M16 58q24-6 48 0M22 76q18 8 36 0" fill="none" stroke="rgba(120,30,20,.45)" stroke-width="1.6"/>'+
+        '<rect x="30" y="90" width="20" height="7" rx="2" fill="#3a2418"/><path d="M36 97l-2 14M40 97v16M44 97l2 14" stroke="#ffcf5c" stroke-width="1.6" stroke-linecap="round"/></svg>'+
+      '<h1>Lantern Lane</h1><p class="ttls">A night market idle game</p>'+
+      '<button type="button" class="ttlgo" id="ttlGo">'+(fresh?'Open your market':'Play')+'</button>'+
+      '<div class="ttlb"><button type="button" class="ttl2" data-tt="shop"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9h16l-1.5 11h-13z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><path d="M8.5 9V7a3.5 3.5 0 0 1 7 0v2" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>Shop</button>'+
+      '<button type="button" class="ttl2" data-tt="set"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="3.2" fill="none" stroke="currentColor" stroke-width="2"/><path d="M12 2.5v3M12 18.5v3M2.5 12h3M18.5 12h3M5.3 5.3l2.1 2.1M16.6 16.6l2.1 2.1M5.3 18.7l2.1-2.1M16.6 7.4l2.1-2.1" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>Settings</button></div>'+
+      '<p class="ttlw">'+sub+'</p>'+
+    '</div><p class="ttlf">Tetovo · Venice · Vienna · Tokyo</p>';
+  document.body.appendChild(w);
+  requestAnimationFrame(function(){w.classList.add('on')});
+  var done=false;
+  function go(){if(done) return;done=true;try{initAudio();applyAudio()}catch(e){}try{sfx('chime')}catch(e){}
+    w.classList.add('out');setTimeout(function(){w.remove()},500)}
+  w.addEventListener('click',function(e){if(e.target.closest('#ttlGo')){go();return}var t=e.target.closest('[data-tt]');if(!t) return;go();
+    var shop=t.dataset.tt==='shop';setTab(shop?'boosts':'stars');
+    setTimeout(function(){var h=[].slice.call(document.querySelectorAll('h2.hd')).filter(function(x){return shop?/Exclusive packs/.test(x.textContent):/^Sound$/.test(x.textContent)})[0];
+      if(h) try{h.scrollIntoView({block:'start',behavior:'smooth'})}catch(e2){h.scrollIntoView()}},120)});
+  setTimeout(function(){try{$('#ttlGo').focus({preventScroll:true})}catch(e){}},80);
+}
 buildShops();buildMap();buildFolkGraph();buildStars();renderBoosts();
+showTitle();
 $('#townName').textContent=T.name;
 setBuy(G.buy,true);
 renderManagers();renderUpgrades();
