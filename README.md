@@ -25,6 +25,15 @@ The game saves on the phone, works without internet and is locked to portrait.
 
 Replace `www/index.html` with the new game file (same name) and upload it. The build runs again by itself.
 
+## Play in the browser (always the newest version)
+
+Turn this on once: repository **Settings**, then **Pages**, then under "Build and deployment" set **Source** to **GitHub Actions**.
+After that, every change to the game publishes it here automatically:
+
+`https://harisaliuu05-dev.github.io/pop/`
+
+On a phone, open the link and choose **Add to Home screen** to get an icon that always opens the newest version.
+
 ## What the app does
 
 - **Save backup.** The save is copied into Android's app storage, which Android Backup sends to the player's Google account. On a new phone or after a reinstall the save comes back.
