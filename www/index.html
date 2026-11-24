@@ -4199,7 +4199,8 @@ function firstUnseen(){for(var i=0;i<SAGA.length;i++) if(!sagaSeen(SAGA[i].id)) 
 function nextBeat(){var b=firstUnseen();return b&&b.town===G.town&&b.when()?b:null}
 var sagaLast=0;
 function sagaTick(){
-  if(G.set.story===false||G.tut<99) return;
+  if(G.set.story===false) return;
+  if(G.tut<99&&!S.shops[0].mgr&&!G.stars) return;
   if(Date.now()-sagaLast<25000) return;
   if($('#sheet').classList.contains('on')||$('#twin')||$('#saga')||$('#night')||$('#title')||(($('#guide')||{}).hidden===false)) return;
   if(!G.story[G.town]){showStory(G.town);sagaLast=Date.now();return}
@@ -5150,10 +5151,10 @@ var TUT=[
  {done:function(){return S.lifetime>0},
   t:function(){return 'Now tap it to cook. When the bar fills, you get paid.'},
   hl:function(){return refs[0]&&refs[0].tile}},
- {quiet:function(){return S.cash<SHOPS[0].mgrCost},done:function(){return S.shops[0].mgr},
+ {quiet:function(){return S.cash<SHOPS[0].mgrCost},done:function(){return S.shops[0].mgr||G.stars>0||S.nights>0},
   t:function(){return S.cash>=SHOPS[0].mgrCost?(G.tab==='managers'?'Hire a manager. They cook for you, even while you sleep.':'You can afford a manager! Open Managers.'):'Keep cooking until you have '+money(SHOPS[0].mgrCost)+' for a manager.'},
   hl:function(){return S.cash>=SHOPS[0].mgrCost?(G.tab==='managers'?$('[data-hire="0"]'):$('#tab-managers')):(G.tab==='shops'?refs[0]&&refs[0].tile:$('#tab-shops'))}},
- {quiet:function(){var u=cheapestUpg();return !u||S.cash<u.cost},done:function(){return Object.keys(S.upg).length>0},
+ {quiet:function(){var u=cheapestUpg();return !u||S.cash<u.cost},done:function(){return Object.keys(S.upg).length>0||G.stars>0||S.nights>0},
   t:function(){var u=cheapestUpg();return u&&S.cash<u.cost?'Save '+money(u.cost)+' for your first upgrade. It makes a shop earn more.':(G.tab==='upgrades'?'Buy this upgrade.':'Upgrades make shops earn more. Open Upgrades.')},
   hl:function(){var u=cheapestUpg();if(!u||S.cash<u.cost) return null;return G.tab==='upgrades'?$('[data-upg="'+u.id+'"]'):$('#tab-upgrades')}},
  {info:'Got it',done:function(){return tutAck||G.tab!=='shops'},
