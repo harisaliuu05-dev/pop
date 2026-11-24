@@ -1428,11 +1428,11 @@ function buildUPG(){
 /* ---------- state ----------
    G holds everything shared (stars, diamonds, boosts, settings). S is the active town's own state. */
 var PERKS={
-  head:{name:'Head Start',cost:[3,8,15,30],desc:function(L){return 'Start each night with the first '+L+(L===1?' shop':' shops')+' open and staffed'}},
-  lamp:{name:'Lantern Light',cost:[4,10,20],desc:function(L){return 'Golden lanterns come '+[0,20,35,50][L]+'% sooner'}},
-  owl:{name:'Night Owl',cost:[4,10,20],desc:function(L){return 'Offline earnings '+Math.round(AWAY_RATE*[1,1.1,1.25,1.5][L]*100)+'% · up to '+AWAY_H[L]+'h away'}},
-  bar:{name:'Bargain Hunter',cost:[6,15,30],desc:function(L){return 'Every shop costs '+[0,4,8,12][L]+'% less'}},
-  luck:{name:'Lucky Charm',cost:[6,15],desc:function(L){return 'Lanterns and requests give +'+L+(L===1?' diamond':' diamonds')}}
+  head:{name:'Head Start',cost:[20,250,3000,40000],desc:function(L){return 'Start each night with the first '+L+(L===1?' shop':' shops')+' open and staffed'}},
+  lamp:{name:'Lantern Light',cost:[15,200,2500],desc:function(L){return 'Golden lanterns come '+[0,20,35,50][L]+'% sooner'}},
+  owl:{name:'Night Owl',cost:[10,150,2000],desc:function(L){return 'Offline earnings '+Math.round(AWAY_RATE*[1,1.1,1.25,1.5][L]*100)+'% · up to '+AWAY_H[L]+'h away'}},
+  bar:{name:'Bargain Hunter',cost:[30,400,5000],desc:function(L){return 'Every shop costs '+[0,4,8,12][L]+'% less'}},
+  luck:{name:'Lucky Charm',cost:[50,6000],desc:function(L){return 'Lanterns and requests give +'+L+(L===1?' diamond':' diamonds')}}
 };
 var TABS=['shops','managers','upgrades','boosts','stars'];
 function num(v,d){return typeof v==='number'&&isFinite(v)?v:d}
@@ -4201,7 +4201,8 @@ var sagaLast=0;
 function sagaTick(){
   if(G.set.story===false||G.tut<99) return;
   if(Date.now()-sagaLast<25000) return;
-  if($('#sheet').classList.contains('on')||$('#twin')||$('#saga')||$('#night')||$('#title')||!G.story[G.town]) return;
+  if($('#sheet').classList.contains('on')||$('#twin')||$('#saga')||$('#night')||$('#title')||(($('#guide')||{}).hidden===false)) return;
+  if(!G.story[G.town]){showStory(G.town);sagaLast=Date.now();return}
   var b=nextBeat();if(!b) return;
   G.saga=G.saga||{};G.saga[b.id]=1;save();sagaLast=Date.now();
   playBeat(b,true);
@@ -5391,7 +5392,7 @@ var TIPS=[
  {id:'night',when:function(){return pendingStars()>=1},
   t:'You can close for the night now. The good: every star adds +2% profit to every shop in every town, forever. The catch: this town’s cash, shops, managers and upgrades start over. Best when you’d collect several stars.',
   hl:function(){return $('#tab-stars')}},
- {id:'perk',when:function(){return G.stars-G.spent>=3&&!Object.keys(G.perks).some(function(k){return G.perks[k]>0})},
+ {id:'perk',when:function(){return G.stars-G.spent>=10&&!Object.keys(G.perks).some(function(k){return G.perks[k]>0})},
   t:'Spend stars on perks in the Stars tab. Don’t worry: spending them doesn’t lower your profit bonus. That counts every star you’ve ever earned.',
   hl:function(){return $('#tab-stars')}},
  {id:'lant',when:function(){return !!lantEl},t:'A golden lantern! Tap it before it floats away for cash, diamonds or a boost.',hl:function(){return lantEl}},
