@@ -1477,7 +1477,7 @@ function loadAll(){
         if(o.dg&&typeof o.dg==='object'&&o.dg.p&&o.dg.c) g.dg={d:String(o.dg.d||''),p:o.dg.p,c:o.dg.c,l0:num(o.dg.l0,0),tg:o.dg.tg==null?null:num(o.dg.tg,0)};
         if(o.story&&typeof o.story==='object') g.story=o.story;if(o.saga&&typeof o.saga==='object') g.saga=o.saga;g.nightIntro=o.nightIntro?1:0;if(o.tips&&typeof o.tips==='object') g.tips=o.tips;g.setWel=o.setWel?1:0;
         g.sp=o.sp;g.bal=o.bal?1:0;g.sep=o.sep?1:0;g.r8=o.r8?1:0;g.noads=o.noads?1:0;g.r8on=o.r8on===0?0:1;g.bless=Math.max(0,Math.min(5,Math.floor(num(o.bless,0))));if(o.skins&&typeof o.skins==='object') g.skins=o.skins;if(o.sk&&typeof o.sk==='object'){['b','v','p'].forEach(function(c){var id=o.sk[c];if(id==='classic'||(typeof id==='string'&&g.skins[id]&&['candy','glass','sky','v_candy','v_glass','v_ufo','p_robot','p_alien','p_pets'].indexOf(id)>=0)) g.sk[c]=id})}
-        if(o.fcap&&typeof o.fcap==='object') g.fcap={d:String(o.fcap.d||''),n:Math.max(0,Math.floor(num(o.fcap.n,0)))};if(o.wad&&typeof o.wad==='object') g.wad={d:String(o.wad.d||''),n:Math.max(0,Math.floor(num(o.wad.n,0)))};
+        if(o.fcap&&typeof o.fcap==='object') g.fcap={d:String(o.fcap.d||''),n:Math.max(0,Math.floor(num(o.fcap.n,0)))};if(o.cd&&typeof o.cd==='object') g.cd={skip:num(o.cd.skip,0),profit:num(o.cd.profit,0),speed:num(o.cd.speed,0)};if(o.wad&&typeof o.wad==='object') g.wad={d:String(o.wad.d||''),n:Math.max(0,Math.floor(num(o.wad.n,0)))};
         if(o.daily&&typeof o.daily==='object') g.daily={d:String(o.daily.d||''),streak:Math.max(0,Math.floor(num(o.daily.streak,0)))};
         if(o.ach&&typeof o.ach==='object') Object.keys(o.ach).forEach(function(k){g.ach[k]=1});
         if(Array.isArray(o.fx)) o.fx.forEach(function(f){if(f&&(f.k==='profit'||f.k==='speed')&&num(f.x,0)>0&&num(f.until,0)>0) g.fx.push({k:f.k,x:f.x,until:f.until,src:f.src==='d'?'d':'l'})});
@@ -4923,6 +4923,11 @@ function checkAch(){
 
 /* boosts tab */
 var TSKIP=[[1,8,'1 hour'],[4,25,'4 hours'],[24,80,'24 hours']];
+/* cooldowns: a time skip locks all skips for as long as it skipped (skipping can never outrun real time);
+   Double profit can be bought again 3 hours after buying it, Double speed 2 hours after */
+var CD_FX={profit:3*3600e3,speed:2*3600e3};
+function cdLeft(k){G.cd=G.cd||{skip:0,profit:0,speed:0};return Math.max(0,(G.cd[k]||0)-Date.now())}
+function cdTxt(ms){var m=Math.ceil(ms/60000),h=Math.floor(m/60);return h?h+'h '+(m%60)+'m':m+'m'}
 function renderBoosts(){
   var rd=dailyReady(),nx=dailyNext(),rw=dailyReward(rd?nx:G.daily.streak);
   var h='<div class="hero"><div class="tile xl" style="--c1:#7fd4ff;--c2:#2a7bd8">'+svgIcon(GEM_PATH+'<path d="M2.5 9.5h19M9 4l-2 5.5 3 7M15 4l2 5.5-3 7"/>')+'</div>'+
@@ -4958,11 +4963,14 @@ function updateBoostsUI(){
   var now=Date.now(),ips=calcIps();
   $('#bgActive').innerHTML=G.fx.length?G.fx.map(function(f){return '<div class="kv"><span>'+fxLabel(f)+(f.src==='l'?' · golden lantern':'')+'</span><b class="num">'+fmtClock(f.until-now)+'</b></div>'}).join(''):
     '<div class="kv"><span>No boosts running</span><b>—</b></div>';
-  $$('#boostBody [data-ba="skip"]').forEach(function(b){b.disabled=G.diamonds<TSKIP[+b.dataset.i][1]||ips<=0});
+  var cs=cdLeft('skip');
+  $$('#boostBody [data-ba="skip"]').forEach(function(b){var t=TSKIP[+b.dataset.i];b.disabled=cs>0||G.diamonds<t[1]||ips<=0;
+    var lab=cs>0?'\u23f3 '+cdTxt(cs):gemSvg()+t[1];if(b.dataset.lab!==lab){b.dataset.lab=lab;b.innerHTML=lab}});
   $$('#boostBody [data-sk]').forEach(function(e){var t=TSKIP[+e.dataset.sk];
-    e.textContent=ips>0?'Managers earn about '+money(ips*t[0]*3600)+' right now':'Hire a manager first, then skip time'});
+    e.textContent=cs>0?'Time skips are resting. Ready again in '+cdTxt(cs):ips>0?'Managers earn about '+money(ips*t[0]*3600)+' right now':'Hire a manager first, then skip time'});
   $$('#boostBody [data-cost]').forEach(function(b){b.disabled=G.diamonds<+b.dataset.cost});
-  $$('#boostBody [data-ba="fx"]').forEach(function(b){b.disabled=G.diamonds<(b.dataset.k==='profit'?10:8)});
+  $$('#boostBody [data-ba="fx"]').forEach(function(b){var k=b.dataset.k,c=k==='profit'?10:8,l=cdLeft(k);b.disabled=l>0||G.diamonds<c;
+    var lab=l>0?'\u23f3 '+cdTxt(l):gemSvg()+c;if(b.dataset.lab!==lab){b.dataset.lab=lab;b.innerHTML=lab}});
 }
 $('#boostBody').addEventListener('click',function(e){
   var b=e.target.closest('[data-ba]');if(!b||b.disabled) return;
@@ -4997,13 +5005,14 @@ $('#boostBody').addEventListener('click',function(e){
     if(gr===r) toast('Daily gift: +'+r+(r===1?' diamond':' diamonds')+' · day '+st+' streak');
   }else if(a==='skip'){
     var t=TSKIP[+b.dataset.i],ips=calcIps();
-    if(G.diamonds<t[1]||ips<=0) return;
-    G.diamonds-=t[1];
+    if(G.diamonds<t[1]||ips<=0||cdLeft('skip')>0) return;
+    G.diamonds-=t[1];G.cd.skip=Date.now()+t[0]*3600e3;
     var br=SHOPS.map(function(){return 0}),g=advance(t[0]*3600,true,br);
     toast('Skipped '+t[2]+' · +'+money(g));
   }else if(a==='fx'){
     var pr=b.dataset.k==='profit',cost=pr?10:8;
-    if(G.diamonds<cost) return;
+    if(G.diamonds<cost||cdLeft(b.dataset.k)>0) return;
+    G.cd[b.dataset.k]=Date.now()+CD_FX[b.dataset.k];
     G.diamonds-=cost;addFx(b.dataset.k,2,pr?3600e3:1800e3,'d');
     toast(pr?'Double profit for 1 hour':'Double speed for 30 minutes');
   }
