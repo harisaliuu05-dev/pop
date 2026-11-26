@@ -718,6 +718,7 @@ body.guiding .hl{animation:none}
 .tws{font-size:13px;font-weight:700;color:rgba(222,214,250,.85);display:flex;align-items:center;gap:5px}
 .tw.r .tws{justify-content:flex-end}
 .tws.here{color:#ffd45c}
+.tws.lk2{display:block;font-size:12px;margin-top:3px;opacity:.75}
 .twpb{display:block;width:120px;max-width:100%;height:5px;margin-top:5px;border-radius:3px;background:rgba(255,255,255,.14);overflow:hidden}.twpb i{display:block;height:100%;background:linear-gradient(90deg,#ffd45c,#ff8a3d);border-radius:3px}
 .tws.lk{color:rgba(222,214,250,.6)}
 .twt em{font-style:normal;font-size:12px;font-weight:700;color:rgba(190,175,255,.75);margin-top:2px}
@@ -1060,7 +1061,7 @@ var SAVE_KEY='lanternLane.v1';
 var MAX_AWAY=30*86400;
 var AWAY_H=[2,4,8,12],AWAY_RATE=1;
 var perfLow=false,perfSet=false;try{var pv=localStorage.getItem('lanternLane.perfLow');perfLow=pv==='1';perfSet=pv!==null}catch(e){}
-function awayCap(){return AWAY_H[(G&&G.perks&&G.perks.owl)|0]*3600}
+function awayCap(){return AWAY_H[(S&&S.perks&&S.perks.owl)|0]*3600}
 var SUF=['','K','M','B','T','Qa','Qi','Sx','Sp','Oc','No','Dc'];
 
 /* ---------- formatting ---------- */
@@ -1376,7 +1377,7 @@ var TOWNS=[
   gP:[['g1','Extended Hours',2,28e5],['g2','Street Food Festival',3,7e9],['g3','Neon Signage',5,7e12],['g4','Night Bus Route',10,7e16],['g5','Tourist Guidebook',20,7e20],['g6','Heritage Listing',50,7e25]],
   gS:[['x1','Express Carts',1.25,5e10],['x2','Night Shuttle',1.5,5e13],['x3','Lantern Lightning',2,5e17]],
   bus:['#ff8a3d','#38c6a5'],theme:{}},
- {id:'harbor',name:'Moonlit Harbor',blurb:'Gelato carts, gondolas and a glittering Grand Canal.',need:5000,scale:1e3,start:5e3,
+ {id:'harbor',name:'Moonlit Harbor',blurb:'Gelato carts, gondolas and a glittering Grand Canal.',need:5000,from:'lane',scale:1e3,start:5e3,
   shops:HARBOR_SHOPS,mgrs:HARBOR_MGRS,
   spd:['Triple Scoop','Quick Pour','Strong Oars','Stone Oven Blaze','Quick Brush','Fast Espresso','Hot Furnace','Rapid Ferry','Room Service'],
   gP:[['g1','Longer Dock Hours',2,28e5],['g2','Carnevale',3,7e9],['g3','Harbor Lights',5,7e12],['g4','Tide Table',10,7e16],['g5','Travel Guide',20,7e20],['g6','Port Charter',50,7e25]],
@@ -1386,7 +1387,7 @@ var TOWNS=[
     water:['#0b3452','#14577a','#bfe6f2'],riverW:[66,58],side:'#85734f',asphalt:'#a99572',canals:true,
     walls:['#e0a46a','#d98a6a','#f0d09a','#c97a5a','#e8b88a','#d4a070'],roofs:['#b0452e','#c25a38','#9a3a2a','#cf6a3e'],
     tree:['#0f3a3f','#1d6a6a'],bush:['#1a5a57','#216b63'],boats:true}},
- {id:'frost',name:'Frost Fair',blurb:'A snowy Viennese Christmas market with carriages and carols.',need:250000,scale:1e6,start:5e6,
+ {id:'frost',name:'Frost Fair',blurb:'A snowy Viennese Christmas market with carriages and carols.',need:25000,from:'harbor',scale:1e6,start:5e6,
   shops:FROST_SHOPS,mgrs:FROST_MGRS,
   spd:['Quick Stir','Fast Roast','Sharp Blades','Quick Grill','Fast Rolling','Shake Shake','Jingle Dash','Quick Whisk','Encore Waltz'],
   gP:[['g1','Warm Lamps',2,28e5],['g2','Winter Market',3,7e9],['g3','Snowfall Show',5,7e12],['g4','Fiaker Route',10,7e16],['g5','Carol Choir',20,7e20],['g6','Royal Charter',50,7e25]],
@@ -1397,7 +1398,7 @@ var TOWNS=[
     walls:['#6a7fa6','#8a6f6f','#5f8f8a','#9a8a6a','#7a6fa6','#a0707f'],roofs:['#e8f2fb','#d6e8f6','#c9def0','#f2f8ff'],
     tree:['#1c4a4a','#e8f4fb'],bush:['#dcecf8','#c6dcee'],snow:true,vienna:true,moon:'#e0f0ff'},
   rowH:160},
- {id:'tokyo',name:'Neon Alley',blurb:'Ramen, karaoke and neon until the last train in Tokyo.',need:10000000,scale:1e9,start:5e9,
+ {id:'tokyo',name:'Neon Alley',blurb:'Ramen, karaoke and neon until the last train in Tokyo.',need:100000,from:'frost',scale:1e9,start:5e9,
   shops:TOKYO_SHOPS,mgrs:TOKYO_MGRS,
   spd:['Rolling Boil','Hot Griddle','Quick Hands','Faster Belt','Quick Whisk','Encore Song','Turbo Mode','Bullet Speed','Express Lift'],
   gP:[['g1','Late Night Hours',2,28e5],['g2','Matsuri Festival',3,7e9],['g3','Neon Billboards',5,7e12],['g4','Last Train Route',10,7e16],['g5','Anime Tourism',20,7e20],['g6','Capital Charter',50,7e25]],
@@ -1437,7 +1438,7 @@ var PERKS={
 var TABS=['shops','managers','upgrades','boosts','stars'];
 function num(v,d){return typeof v==='number'&&isFinite(v)?v:d}
 function newTown(def){
-  return {cash:def.start,lifetime:0,run:0,claim:0,nights:0,t:Date.now(),
+  return {cash:def.start,lifetime:0,run:0,claim:0,nights:0,t:Date.now(),spent:0,perks:{head:0,lamp:0,owl:0,bar:0,luck:0},
     shops:def.shops.map(function(){return {n:0,p:0,run:false,mgr:false}}),upg:{}};
 }
 var UPG_ID_RE=/^(s\d+[a-d]|g\d+|x\d+)$/;
@@ -1445,6 +1446,7 @@ function normTown(def,o){
   var d=newTown(def);if(!o||typeof o!=='object') return d;
   d.cash=Math.max(0,num(o.cash,def.start));d.lifetime=Math.max(0,num(o.lifetime,0));d.run=Math.max(0,num(o.run,0));
   d.claim=Math.max(0,Math.floor(num(o.claim,0)));d.nights=Math.max(0,Math.floor(num(o.nights,0)));d.t=num(o.t,Date.now());
+  d.spent=Math.max(0,Math.floor(num(o.spent,0)));if(o.perks&&typeof o.perks==='object') Object.keys(d.perks).forEach(function(k){d.perks[k]=Math.max(0,Math.min(PERKS[k].cost.length,Math.floor(num(o.perks[k],0))))});
   if(Array.isArray(o.shops)) def.shops.forEach(function(_,i){
     var x=o.shops[i];
     if(x&&typeof x==='object') d.shops[i]={n:Math.max(0,Math.floor(num(x.n,0))),p:Math.max(0,num(x.p,0)),run:!!x.run,mgr:!!x.mgr};
@@ -1474,7 +1476,7 @@ function loadAll(){
         g.diamonds=Math.max(0,Math.floor(num(o.diamonds,0)));
         if(o.dg&&typeof o.dg==='object'&&o.dg.p&&o.dg.c) g.dg={d:String(o.dg.d||''),p:o.dg.p,c:o.dg.c,l0:num(o.dg.l0,0),tg:o.dg.tg==null?null:num(o.dg.tg,0)};
         if(o.story&&typeof o.story==='object') g.story=o.story;if(o.saga&&typeof o.saga==='object') g.saga=o.saga;g.nightIntro=o.nightIntro?1:0;if(o.tips&&typeof o.tips==='object') g.tips=o.tips;g.setWel=o.setWel?1:0;
-        g.sp=o.sp;g.bal=o.bal?1:0;g.r8=o.r8?1:0;g.noads=o.noads?1:0;g.r8on=o.r8on===0?0:1;g.bless=Math.max(0,Math.min(5,Math.floor(num(o.bless,0))));if(o.skins&&typeof o.skins==='object') g.skins=o.skins;if(o.sk&&typeof o.sk==='object'){['b','v','p'].forEach(function(c){var id=o.sk[c];if(id==='classic'||(typeof id==='string'&&g.skins[id]&&['candy','glass','sky','v_candy','v_glass','v_ufo','p_robot','p_alien','p_pets'].indexOf(id)>=0)) g.sk[c]=id})}
+        g.sp=o.sp;g.bal=o.bal?1:0;g.sep=o.sep?1:0;g.r8=o.r8?1:0;g.noads=o.noads?1:0;g.r8on=o.r8on===0?0:1;g.bless=Math.max(0,Math.min(5,Math.floor(num(o.bless,0))));if(o.skins&&typeof o.skins==='object') g.skins=o.skins;if(o.sk&&typeof o.sk==='object'){['b','v','p'].forEach(function(c){var id=o.sk[c];if(id==='classic'||(typeof id==='string'&&g.skins[id]&&['candy','glass','sky','v_candy','v_glass','v_ufo','p_robot','p_alien','p_pets'].indexOf(id)>=0)) g.sk[c]=id})}
         if(o.fcap&&typeof o.fcap==='object') g.fcap={d:String(o.fcap.d||''),n:Math.max(0,Math.floor(num(o.fcap.n,0)))};if(o.wad&&typeof o.wad==='object') g.wad={d:String(o.wad.d||''),n:Math.max(0,Math.floor(num(o.wad.n,0)))};
         if(o.daily&&typeof o.daily==='object') g.daily={d:String(o.daily.d||''),streak:Math.max(0,Math.floor(num(o.daily.streak,0)))};
         if(o.ach&&typeof o.ach==='object') Object.keys(o.ach).forEach(function(k){g.ach[k]=1});
@@ -1498,9 +1500,11 @@ function save(){try{var now=Date.now();G.t=now;S.t=now;G.towns[G.town]=S;localSt
 
 /* One-time conversion for saves from before the star rebalance (+10% per star, square-root stars):
    stars are multiplied by 5 so the profit bonus stays the same, and each town's claimed count is capped to the new curve. */
+function totalStars(){var n=0;TOWNS.forEach(function(d){var t=G.towns[d.id];if(t) n+=t.claim||0});return n}
+function sepFix(){if(G.sep) return;TOWNS.forEach(function(d){var t=G.towns[d.id];if(!t) return;Object.keys(t.perks).forEach(function(k){t.perks[k]=Math.max(t.perks[k],(G.perks&&G.perks[k])|0)});t.spent=0});G.stars=totalStars();G.sep=1}
 function balFix(){if(G.bal) return;G.stars=Math.floor((G.stars||0)*5);
   TOWNS.forEach(function(d){var t=G.towns&&G.towns[d.id];if(t) t.claim=Math.min(t.claim||0,Math.floor(Math.cbrt((t.lifetime||0)/(1e8*d.scale))+1e-9))});G.bal=1}
-var G=loadAll(),S=null;G.sp=spNorm(G.sp);balFix();
+var G=loadAll(),S=null;G.sp=spNorm(G.sp);balFix();sepFix();
 /* 8-Bit Retro Pack: a one-time purchase (real money, not diamonds). Owners can switch it on and off. */
 var R8_PRICE='$2.99',R8_SKU='retro_pack_8bit';
 /* No Ads: a one-time purchase. Every ad reward is given instantly without watching, and window.LL_NOADS tells the app to show no other ads. */
@@ -1528,7 +1532,7 @@ function recalc(){
     if(u.spd){if(u.shop<0) gSpd*=u.spd;else spdMult[u.shop]*=u.spd;return}
     if(u.shop<0) gMult*=u.mult;else shopMult[u.shop]*=u.mult;
   });
-  sMult=1+0.02*G.stars;
+  sMult=1+0.02*S.claim;
 }
 /* Timed boosts (golden lantern, diamond boosts) */
 function updateFx(){
@@ -1550,9 +1554,9 @@ var EVERY=[[25,2],[100,2],[200,3]];
 function minOwned(){var m=Infinity;for(var i=0;i<N;i++) m=Math.min(m,S.shops[i].n);return m===Infinity?0:m}
 function everyMult(){var m=minOwned(),x=1;EVERY.forEach(function(e){if(m>=e[0]) x*=e[1]});return x}
 function profit(i){return SHOPS[i].profit*S.shops[i].n*shopMult[i]*gMult*sMult*fxP*everyMult()*(EV?EV.m:1)*(1+.05*G.bless)*spP(i)}
-function discount(){return 1-[0,.04,.08,.12][G.perks.bar]}
-function owlMult(){return [1,1.1,1.25,1.5][G.perks.owl]}
-function lampF(){return [1,.8,.65,.5][G.perks.lamp]}
+function discount(){return 1-[0,.04,.08,.12][S.perks.bar]}
+function owlMult(){return [1,1.1,1.25,1.5][S.perks.owl]}
+function lampF(){return [1,.8,.65,.5][S.perks.lamp]}
 var owlOn=false;
 function buyCost(i,k){
   var s=SHOPS[i],r=s.coef;
@@ -3838,9 +3842,9 @@ function buildStars(){
   (function(){var n=SAGA.filter(function(b){return sagaSeen(b.id)}).length;$('#sgProg').textContent=n+' of '+SAGA.length+' chapters'})();
   $('#perkBody').addEventListener('click',function(e){
     var b=e.target.closest('[data-perk]');if(!b||b.disabled) return;
-    var k=b.dataset.perk,P=PERKS[k],L=G.perks[k],c=P.cost[L];
-    if(c===undefined||G.stars-G.spent<c) return;
-    G.spent+=c;G.perks[k]=L+1;sfx('chime');
+    var k=b.dataset.perk,P=PERKS[k],L=S.perks[k],c=P.cost[L];
+    if(c===undefined||S.claim-S.spent<c) return;
+    S.spent+=c;G.spent=(G.spent||0)+c;S.perks[k]=L+1;sfx('chime');
     toast(P.name+' level '+(L+1)+': '+P.desc(L+1));
     renderPerks();updateStarsUI();refreshUI();save();
   });
@@ -3866,7 +3870,7 @@ function buildStars(){
 function starSvg(){return '<svg class="pic" viewBox="0 0 32 32" aria-hidden="true"><path d="M16 3l3.8 8 8.7 1.1-6.4 6 1.7 8.7L16 22.2 8.2 26.8l1.7-8.7-6.4-6L12.2 11z" fill="url(#icGold)" stroke="rgba(70,35,10,.45)" stroke-width=".9" stroke-linejoin="round"/><path d="M16 3l3.8 8-3.8 1.4-3.8-1.4z" fill="rgba(255,255,255,.4)"/><circle cx="12.6" cy="12.6" r="1.1" fill="#fff" opacity=".85"/></svg>'}
 function renderPerks(){
   $('#perkBody').innerHTML=Object.keys(PERKS).map(function(k){
-    var P=PERKS[k],L=G.perks[k],max=P.cost.length,dots='';
+    var P=PERKS[k],L=S.perks[k],max=P.cost.length,dots='';
     for(var i=0;i<max;i++) dots+=(i<L?'●':'○');
     var sub=L>=max?'Maxed · '+P.desc(L):(L>0?'Now: '+P.desc(L)+'. Next: ':'')+(L>=max?'':P.desc(L+1));
     return '<div class="row brow"><div class="bi"><div class="bnm">'+P.name+' <span class="pdots">'+dots+'</span></div><div class="bsub">'+sub+'</div></div>'+
@@ -3875,16 +3879,16 @@ function renderPerks(){
   updatePerks();
 }
 function updatePerks(){
-  var av=G.stars-G.spent;
-  $$('#perkBody [data-perk]').forEach(function(b){var P=PERKS[b.dataset.perk];b.disabled=av<P.cost[G.perks[b.dataset.perk]]});
-  var f=$('#perkFoot');if(f) f.textContent='You have '+fmt(av)+(av===1?' star':' stars')+' to spend. Spent stars still count for the +2% profit bonus.';
+  var av=S.claim-S.spent;
+  $$('#perkBody [data-perk]').forEach(function(b){var P=PERKS[b.dataset.perk];b.disabled=av<P.cost[S.perks[b.dataset.perk]]});
+  var f=$('#perkFoot');if(f) f.textContent='You have '+fmt(av)+(av===1?' star':' stars')+' to spend in '+T.name+'. Perks only work in this town. Spent stars still count for its +2% profit bonus.';
 }
 function syncSnd(){$$('[data-story]').forEach(function(b){var on=G.set.story!==false;b.classList.toggle('on',on);b.setAttribute('aria-checked',String(on))});$$('[data-badge]').forEach(function(b){var on=G.set.badges!==false;b.classList.toggle('on',on);b.setAttribute('aria-checked',String(on))});$$('[data-perf]').forEach(function(b){b.classList.toggle('on',perfLow);b.setAttribute('aria-checked',String(perfLow))});$$('[data-snd]').forEach(function(b){var on=!!G.set[b.dataset.snd];b.classList.toggle('on',on);b.setAttribute('aria-checked',String(on))})}
 function updateStarsUI(){
   updatePerks();
   var p=pendingStars(),cur=S.claim+p,sc=1e8*T.scale;
-  $('#stN').textContent=fmt(G.stars);
-  $('#stBonus').textContent='+'+fmt(G.stars*2)+'% profit on every shop, in every town';
+  $('#stN').textContent=fmt(S.claim);
+  $('#stBonus').textContent='+'+fmt(S.claim*2)+'% profit on every shop in '+T.name;
   $('#stPend').textContent='+'+fmt(p)+(p===1?' star':' stars');
   var lo=cur*cur*cur*sc,hi=(cur+1)*(cur+1)*(cur+1)*sc;
   $('#stMeter').style.width=Math.max(0,Math.min(100,(S.lifetime-lo)/(hi-lo)*100)).toFixed(1)+'%';
@@ -3900,15 +3904,15 @@ function updateStarsUI(){
 var pKeep=-1;
 function askPrestige(){
   var g=pendingStars();if(g<1) return;
-  var tot=G.stars+g,gems=Math.min(25,1+Math.floor(g/3)),hired=[];
+  var tot=S.claim+g,gems=Math.min(25,1+Math.floor(g/3)),hired=[];
   S.shops.forEach(function(sh,i){if(sh.mgr) hired.push(i)});
   pKeep=hired.length?hired.reduce(function(a,i){return S.shops[i].n>S.shops[a].n?i:a},hired[0]):-1;
   var pick=hired.length?'<div class="pkh">One manager stays with you</div><div class="pkm" role="radiogroup" aria-label="Manager who stays">'+hired.map(function(i){
       return '<button type="button" class="pkb'+(i===pKeep?' on':'')+'" role="radio" aria-checked="'+(i===pKeep)+'" data-pk="'+i+'" style="--c1:'+SHOPS[i].c1+';--c2:'+SHOPS[i].c2+'"><span>'+portrait(i)+'</span><i>'+SHOPS[i].mgr.split(' ').slice(-1)[0]+'</i></button>'}).join('')+'</div>':'';
   openSheet({
     title:'Close '+T.name+' for the night?',
-    html:'<div class="pkst"><b>+'+fmt(g)+'</b> stars · <b>+'+gems+'</b> diamonds<br><span>'+fmt(tot)+' stars in total = +'+fmt(tot*2)+'% profit in every town</span></div>'+
-      '<div class="pkk"><div><h4>You keep</h4><ul><li>Stars and star perks</li><li>Diamonds and skins</li><li>The story and your goals</li><li>Your other towns</li><li>Your first shop, open</li>'+(hired.length?'<li>One manager (pick below)</li>':'')+'</ul></div>'+
+    html:'<div class="pkst"><b>+'+fmt(g)+'</b> stars · <b>+'+gems+'</b> diamonds<br><span>'+fmt(tot)+' stars in '+T.name+' = +'+fmt(tot*2)+'% profit in this town</span></div>'+
+      '<div class="pkk"><div><h4>You keep</h4><ul><li>This town\u2019s stars and perks</li><li>Diamonds and skins</li><li>The story and your goals</li><li>Your other towns</li><li>Your first shop, open</li>'+(hired.length?'<li>One manager (pick below)</li>':'')+'</ul></div>'+
       '<div><h4>Starts over</h4><ul><li>Cash</li><li>Shops</li><li>Managers</li><li>Upgrades</li></ul><p>Only in '+T.name+'</p></div></div>'+pick,
     actions:[{label:'Close for the night',kind:'primary',fn:doPrestige}]
   });
@@ -3916,12 +3920,12 @@ function askPrestige(){
 }
 function doPrestige(){
   var g=pendingStars();if(g<1) return;
-  var keep={claim:S.claim+g,lifetime:S.lifetime,nights:S.nights+1},km=pKeep,top=0;
+  var keep={claim:S.claim+g,lifetime:S.lifetime,nights:S.nights+1,spent:S.spent,perks:S.perks},km=pKeep,top=0;
   S.shops.forEach(function(sh,i){if(sh.n>0) top=i});
-  G.stars+=g;sfx('chime');burst(innerWidth/2,innerHeight*.35,['#ffd45c','#ff9a3d','#fff0a8','#ff6b6f','#6fe0ff'],34,150);
+  sfx('chime');burst(innerWidth/2,innerHeight*.35,['#ffd45c','#ff9a3d','#fff0a8','#ff6b6f','#6fe0ff'],34,150);
   var gems=Math.min(25,1+Math.floor(g/3));G.diamonds+=gems;
-  S=newTown(T);S.claim=keep.claim;S.lifetime=keep.lifetime;S.nights=keep.nights;
-  for(var hs=0;hs<G.perks.head&&hs<S.shops.length;hs++){S.shops[hs].n=1;S.shops[hs].mgr=true;S.shops[hs].run=true}
+  S=newTown(T);S.claim=keep.claim;S.lifetime=keep.lifetime;S.nights=keep.nights;S.spent=keep.spent;S.perks=keep.perks;G.stars=totalStars();
+  for(var hs=0;hs<S.perks.head&&hs<S.shops.length;hs++){S.shops[hs].n=1;S.shops[hs].mgr=true;S.shops[hs].run=true}
   if(S.shops[0].n<1) S.shops[0].n=1;
   if(km>=0&&S.shops[km]) S.shops[km].mgr=true;pKeep=-1;
   G.towns[T.id]=S;
@@ -3963,7 +3967,7 @@ function showNight(g,gems,n,who){
   el.innerHTML='<div class="nstars">'+stars+'</div>'+dawnSky()+'<div class="ncard">'+
     '<div class="nk">Night '+n+' complete · lantern '+n+' hung</div><h2>Dawn over '+T.name+'</h2>'+
     '<div class="nbig"><span id="nCount">0</span><svg viewBox="0 0 32 32" aria-hidden="true"><path d="M16 3l3.8 8 8.7 1.1-6.4 6 1.7 8.7L16 22.2 8.2 26.8l1.7-8.7-6.4-6L12.2 11z" fill="url(#icGold)" stroke="rgba(70,35,10,.45)" stroke-width=".9" stroke-linejoin="round"/></svg></div>'+
-    '<div class="nrows"><div><span>Diamonds</span><b>+'+gems+'</b></div><div><span>Profit bonus, every town</span><b>+'+fmt(G.stars*2)+'%</b></div><div><span>Total stars</span><b>'+fmt(G.stars)+'</b></div></div>'+
+    '<div class="nrows"><div><span>Diamonds</span><b>+'+gems+'</b></div><div><span>Profit bonus in '+T.name+'</span><b>+'+fmt(S.claim*2)+'%</b></div><div><span>Stars in '+T.name+'</span><b>'+fmt(S.claim)+'</b></div></div>'+
     talk+
     '<button type="button" class="nbtn" id="nGo">Open at dusk</button></div>';
   document.body.appendChild(el);
@@ -3989,7 +3993,8 @@ function askErase(){
 }
 
 /* ---------- towns: switching and picker ---------- */
-function townUnlocked(def){return G.stars>=def.need||!!G.visited[def.id]}
+function townStars(id){var t=G.towns[id];return t?t.claim||0:0}
+function townUnlocked(def){return !def.from||townStars(def.from)>=def.need||!!G.visited[def.id]}
 function rebuildTown(){
   removeLantern();lantNext=(22+Math.random()*14)*lampF();
   seeded=false;lastIps='';lastStars='';lastCash='';
@@ -4074,7 +4079,7 @@ var SAGA=[
   [8,'He sat by the window with an old brass frame on his knees, watching the road from the pass. Like he was waiting for a bus that stopped coming fifty years ago.'],
   ['n','Fifty years. You count back from 1976 on your fingers.'],
   ['n','The promise is due this winter.']]},
- {id:'l7',bk:0,town:'lane',t:'The left wheel still sticks',hint:'Reach 5,000 stars',when:function(){return G.stars>=5000},g:10,piece:'frame',L:[
+ {id:'l7',bk:0,town:'lane',t:'The left wheel still sticks',hint:'Reach 5,000 stars in Tetovo',when:function(){return townStars('lane')>=5000},g:10,piece:'frame',L:[
   ['n','Besim is waiting by your cart before the lane even opens. He is holding the brass frame. His hands are shaking a little. He says it is the cold.'],
   [6,'Nobody came. Not one of them. Not one letter. So I stopped waiting. That is what you do.'],
   [6,'…But if you are going to Venice anyway. If you happen to see a man who talks to glass…'],
@@ -4105,7 +4110,7 @@ var SAGA=[
   [8,'Every year I meant to try again. Every year I was a little more proud and a little more afraid. And then it was fifty years.'],
   [6,'The second set is still in his workshop, wrapped in newspaper from 1977. Not one scratch. He polishes them every Sunday.'],
   [7,'My boats are fast, Count. Whatever you’re too scared to carry, I’ll carry it for you.']]},
- {id:'h7',bk:1,town:'harbor',t:'The glass for coming back',hint:'Reach 250,000 stars',when:function(){return G.stars>=250000},g:10,piece:'glass',L:[
+ {id:'h7',bk:1,town:'harbor',t:'The glass for coming back',hint:'Reach 25,000 stars in Venice',when:function(){return townStars('harbor')>=25000},g:10,piece:'glass',L:[
   [8,'Take them. Not the old glass. The second set. The glass I made for coming back.'],
   [8,'And this letter is for the clockmaker in Vienna. Don’t read it. It is mostly apologies, and some very bad poetry.'],
   ['n','As you unwrap the panes, a page slips out of the old newspaper. The same handwriting as the drawer.'],
@@ -4138,7 +4143,7 @@ var SAGA=[
   [['card','tokyo'],'Mori never left the station.\nAsk the trains.\n{L}'],
   [5,'Whoever writes these knows all of us. Too well.'],
   [5,'…Only one person ever knew us that well. But she would never… no. No. Forget I said anything.']]},
- {id:'f7',bk:2,town:'frost',t:'The night train east',hint:'Reach 10 million stars',when:function(){return G.stars>=1e7},g:10,L:[
+ {id:'f7',bk:2,town:'frost',t:'The night train east',hint:'Reach 100,000 stars in Vienna',when:function(){return townStars('frost')>=100000},g:10,L:[
   [6,'To the station! Blankets for everyone. And for the professor, two.'],
   [5,'I’m coming with you. I have a heart to deliver and a very old friend to shout at.'],
   [5,'And on the way, you can tell me again about that cart in Tetovo. The one with five names.']]},
@@ -4383,7 +4388,7 @@ function openTowns(){
   }
   var rows=order.map(function(def,i){
     var ok=townUnlocked(def),cur=def.id===G.town,right=i%2===1,tn=G.towns[def.id],open=tn?tn.shops.filter(function(s){return s.n>0}).length:0;
-    var sub=cur?'<span class="tws here">You are here</span>':ok?'<span class="tws">★ '+open+' / '+def.shops.length+' shops</span>':'<span class="tws lk"><svg viewBox="0 0 16 16" width="15" height="15" aria-hidden="true"><path d="M4.5 7V5a3.5 3.5 0 0 1 7 0v2" fill="none" stroke="#ffd45c" stroke-width="1.6" stroke-linecap="round"/><rect x="3" y="7" width="10" height="7.4" rx="2" fill="#ffd45c"/></svg>Opens at '+fmt(def.need)+'★</span><span class="twpb"><i style="width:'+Math.min(100,G.stars/def.need*100).toFixed(1)+'%"></i></span>';
+    var sub=cur?'<span class="tws here">You are here</span>':ok?'<span class="tws">★ '+open+' / '+def.shops.length+' shops</span>':'<span class="tws lk"><svg viewBox="0 0 16 16" width="15" height="15" aria-hidden="true"><path d="M4.5 7V5a3.5 3.5 0 0 1 7 0v2" fill="none" stroke="#ffd45c" stroke-width="1.6" stroke-linecap="round"/><rect x="3" y="7" width="10" height="7.4" rx="2" fill="#ffd45c"/></svg>Opens at '+def.need.toLocaleString('en-US')+' \u2605 in '+TOWN_PLACE[def.from]+'</span><span class="twpb"><i style="width:'+Math.max(2,Math.min(100,townStars(def.from)/def.need*100)).toFixed(1)+'%"></i></span><span class="tws lk2">'+fmt(townStars(def.from))+' / '+def.need.toLocaleString('en-US')+'</span>';
     return '<button type="button" class="tw'+(right?' r':'')+(cur?' cur':'')+(ok?'':' off')+'" data-town="'+def.id+'"'+(ok?'':' disabled')+' style="height:'+RH+'px">'+
       '<span class="tp">'+townEmblem(def.id)+'</span>'+
       '<span class="twt"><i>TOWN '+(TOWNS.indexOf(def)+1)+'</i><b>'+def.name+'</b>'+sub+'<em>◆ '+TOWN_PLACE[def.id]+'</em></span></button>';
@@ -4393,7 +4398,7 @@ function openTowns(){
   var h='<div class="tmap th-'+G.town+'" style="height:'+Ht+'px"><svg class="tbg" viewBox="0 0 '+Wd+' '+Ht+'" preserveAspectRatio="none" aria-hidden="true">'+townThemeSvg(G.town,Wd,Ht)+(G.town==='frost'?sn:bg)+ln+'</svg>'+rows+'</div>';
   closeTownWin(true);
   var w=document.createElement('div');w.className='twin th-'+G.town;w.id='twin';w.setAttribute('role','dialog');w.setAttribute('aria-modal','true');w.setAttribute('aria-label','Choose a town');
-  w.innerHTML='<div class="twhead"><h2>Choose a town</h2><button type="button" class="twdone" id="twDone">Done</button></div><p class="twsub">You have '+fmt(G.stars)+(G.stars===1?' star':' stars')+'. Stars work in every town.</p>'+h;
+  w.innerHTML='<div class="twhead"><h2>Choose a town</h2><button type="button" class="twdone" id="twDone">Done</button></div><p class="twsub">Every town earns its own stars and money. Diamonds work everywhere.</p>'+h;
   document.body.appendChild(w);
   if(retroOn()){var tbg=w.querySelector('.tbg');if(tbg) pixLayer(tbg,2)}
   w.addEventListener('click',function(e){
@@ -4895,7 +4900,7 @@ var ACH=[
  ['a15','Lantern catcher','Catch a golden lantern',1,function(){return G.stat.lant>=1}],
  ['a16','Lantern hunter','Catch 25 golden lanterns',5,function(){return G.stat.lant>=25}],
  ['a18','Good neighbour','Finish 5 villager requests',3,function(){return G.stat.req>=5}],
- ['a19','Wish maker','Buy a star perk',2,function(){return G.spent>0}],
+ ['a19','Wish maker','Buy a star perk',2,function(){return (G.spent||0)>0}],
  ['a20','Rising star','Reach 1,000 stars',4,function(){return G.stars>=1e3}],
  ['a21','Star merchant','Reach 100,000 stars',6,function(){return G.stars>=1e5}],
  ['a22','Half a million','Reach 500,000 stars',8,function(){return G.stars>=5e5}],
@@ -5048,7 +5053,7 @@ function updateReq(){
 }
 $('#req').addEventListener('click',function(e){
   if(!e.target.closest('#reqGo')||!G.req||!G.req.done) return;
-  var g=G.req.gems+G.perks.luck;giveFree(g);G.stat.req++;dgAdd('req',1);G.req=null;reqSig='';reqT=0;reqNext=60+Math.random()*50;
+  var g=G.req.gems+S.perks.luck;giveFree(g);G.stat.req++;dgAdd('req',1);G.req=null;reqSig='';reqT=0;reqNext=60+Math.random()*50;
   toast('Request done: +'+g+(g===1?' diamond':' diamonds'));
   updateReq();refreshUI();save();
 });
@@ -5100,7 +5105,7 @@ function spawnLantern(){
     }else if(roll<.80){
       addFx('profit',5,30000,'l');floatText(x,y,'×5 profit');msg='Golden lantern: ×5 profit for 30 seconds';
     }else{
-      var g=giveFree(1+Math.floor(Math.random()*3)+G.perks.luck);floatText(x,y,g?'+'+g+' 💎':'Limit reached');msg=g?'Golden lantern: +'+g+(g===1?' diamond':' diamonds'):'Golden lantern: daily diamond limit reached';
+      var g=giveFree(1+Math.floor(Math.random()*3)+S.perks.luck);floatText(x,y,g?'+'+g+' 💎':'Limit reached');msg=g?'Golden lantern: +'+g+(g===1?' diamond':' diamonds'):'Golden lantern: daily diamond limit reached';
     }
     toast(msg);refreshUI();save();
   });
@@ -5131,7 +5136,7 @@ function openImport(){
         if(!o||typeof o!=='object'||!o.towns||typeof o.towns!=='object') throw 0;
         localStorage.setItem(SAVE_KEY,txt);
       }catch(e){toast('That code does not look right');return}
-      G=loadAll();G.sp=spNorm(G.sp);balFix();applyRetro();applyTown(G.town);updateFx();
+      G=loadAll();G.sp=spNorm(G.sp);balFix();sepFix();applyRetro();applyTown(G.town);updateFx();
       setBuy(G.buy,true);rebuildTown();setTab('shops');refreshUI();save();
       toast('Save imported');
     }}]});
@@ -5255,7 +5260,7 @@ var lastIps='',lastStars='',lastGem='';
 function refreshUI(){
   var ips=calcIps(),t=ips>0?'+'+money(ips)+'/s':'Tap to earn';
   if(t!==lastIps){$('#ips').textContent=t;lastIps=t}
-  var st=fmt(G.stars)+(G.stars===1?' star':' stars')+' · +'+fmt(G.stars*2)+'%';
+  var st=fmt(S.claim)+(S.claim===1?' star':' stars')+' · +'+fmt(S.claim*2)+'%';
   if(st!==lastStars){$('#starTxt').textContent=st;lastStars=st}
   updateShopsUI();syncFolk();
   var mb=0;
@@ -5286,15 +5291,16 @@ function showWelcome(dt,g,br,raw){
     (rows.length?'<div class="wbc">'+rows.map(function(x){var q=SHOPS[x.i];return '<div><span class="tile sm" style="--c1:'+q.c1+';--c2:'+q.c2+'">'+shopIcon(q)+'</span><b class="num">+'+money(x.v)+'</b></div>'}).join('')+'</div>':'')+'</div>';
   openSheet({
     pre:pre,title:'Welcome back',big:'+'+money(g),html:h,nocancel:true,
-    actions:[
-      {label:'<span class="wbx">×3</span> '+(adFree()?'Triple it':'Watch an ad')+' &nbsp;·&nbsp; +'+money(g*3),kind:'primary',fn:function(){
+    /* doubling with an ad is only offered after at least an hour away */
+    actions:((raw||dt)>=3600?[
+      {label:'<span class="wbx">×2</span> '+(adFree()?'Double it':'Watch an ad')+' &nbsp;·&nbsp; +'+money(g*2),kind:'primary',fn:function(){
         showRewardedAd(function(){
-          var extra=g*2;S.cash+=extra;S.lifetime+=extra;S.run+=extra;
-          refreshUI();save();sfx('fanfare');burstEl($('#cash'),['#ffd45c','#ff9a3d','#ffffff'],22,90);toast('Tripled! +'+money(extra)+' extra');
+          var extra=g;S.cash+=extra;S.lifetime+=extra;S.run+=extra;
+          refreshUI();save();sfx('fanfare');burstEl($('#cash'),['#ffd45c','#ff9a3d','#ffffff'],22,90);toast('Doubled! +'+money(extra)+' extra');
         });
-      }},
-      {label:'Collect +'+money(g),fn:function(){sfx('coin');burstEl($('#cash'),['#ffd45c','#ffe9a8','#ffffff'],14,70)}}
-    ]
+      }}]:[]).concat([
+      {label:'Collect +'+money(g),kind:(raw||dt)>=3600?'':'primary',fn:function(){sfx('coin');burstEl($('#cash'),['#ffd45c','#ffe9a8','#ffffff'],14,70)}}
+    ])
   });
   var big=$('#sheetCard .s-big');
   if(big&&!RM.matches){var t0=performance.now();(function tick(now){var f=Math.min(1,(now-t0)/900),e=1-Math.pow(1-f,3);big.textContent='+'+money(g*e);if(f<1&&big.isConnected) requestAnimationFrame(tick);else big.textContent='+'+money(g)})(t0)}
@@ -5353,7 +5359,7 @@ function showTitle(){
   var w=document.createElement('div');w.id='title';w.className='ttl th-'+G.town;w.setAttribute('role','dialog');w.setAttribute('aria-modal','true');w.setAttribute('aria-label','Lantern Lane');
   var fresh=!G.stars&&!Object.keys(G.towns).some(function(k){return G.towns[k].lifetime>0}),nights=0;
   Object.keys(G.towns).forEach(function(k){nights+=G.towns[k].nights||0});
-  var sub=fresh?'Your first night market is waiting':'Welcome back · '+T.name+' · '+fmt(G.stars)+' ★'+(nights?' · '+nights+(nights===1?' night':' nights'):'');
+  var sub=fresh?'Your first night market is waiting':'Welcome back · '+T.name+' · '+fmt(S.claim)+' ★'+(nights?' · '+nights+(nights===1?' night':' nights'):'');
   var fly='';for(var i=0;i<9;i++) fly+='<i style="left:'+(6+i*11+(i%2?3:-2))+'%;animation-delay:-'+(i*1.7).toFixed(1)+'s;animation-duration:'+(11+(i*7)%6)+'s;--s:'+(.6+(i*37%40)/100).toFixed(2)+'"></i>';
   var stars='';for(i=0;i<30;i++) stars+='<b style="left:'+((i*53+7)%100)+'%;top:'+((i*31+11)%55)+'%;animation-delay:-'+((i*0.37)%3).toFixed(2)+'s"></b>';
   w.innerHTML='<svg class="ttlbg" viewBox="0 0 360 640" preserveAspectRatio="xMidYMax slice" aria-hidden="true">'+townThemeSvg(G.town,360,640)+'</svg>'+
@@ -5391,9 +5397,9 @@ var TIPS=[
  {id:'away',when:function(){return S.shops.some(function(x){return x.mgr})&&S.lifetime>2e3},
   t:'Managers keep cooking even when the game is closed. Come back within '+AWAY_H[0]+' hours to collect everything (longer with the Night Owl perk).',hl:function(){return null}},
  {id:'night',when:function(){return pendingStars()>=1},
-  t:'You can close for the night now. The good: every star adds +2% profit to every shop in every town, forever. The catch: this town’s cash, shops, managers and upgrades start over. Best when you’d collect several stars.',
+  t:'You can close for the night now. The good: every star adds +2% profit to every shop in this town, forever. The catch: this town’s cash, shops, managers and upgrades start over. Best when you’d collect several stars.',
   hl:function(){return $('#tab-stars')}},
- {id:'perk',when:function(){return G.stars-G.spent>=10&&!Object.keys(G.perks).some(function(k){return G.perks[k]>0})},
+ {id:'perk',when:function(){return S.claim-S.spent>=10&&!Object.keys(S.perks).some(function(k){return S.perks[k]>0})},
   t:'Spend stars on perks in the Stars tab. Don’t worry: spending them doesn’t lower your profit bonus. That counts every star you’ve ever earned.',
   hl:function(){return $('#tab-stars')}},
  {id:'lant',when:function(){return !!lantEl},t:'A golden lantern! Tap it before it floats away for cash, diamonds or a boost.',hl:function(){return lantEl}},
@@ -5446,11 +5452,11 @@ function openHelp(){
     sec(I('#5a8aff','🧑‍🍳'),'Managers','<p>A manager runs a shop for you, forever. No more tapping.</p><p class="hpp">+ They keep cooking while the game is closed. You collect up to '+AWAY_H[0]+' hours of earnings, or up to '+AWAY_H[3]+' with the Night Owl perk.</p>')+
     sec(I('#8a56f0','⬆️'),'Upgrades','<p>One-time buys that multiply a shop’s profit or speed, or every shop at once. The cheapest one is usually worth it.</p>')+
     sec(I('#ffb347','🌙'),'Close for the night','<p>When a town has earned enough, you can close it in the <b>Stars</b> tab and start it again, stronger.</p>'+
-      '<div class="hpk"><div><h4>You get</h4><ul><li>Stars: each one is <b>+2% profit</b> in every town, forever</li><li>Diamonds</li><li>A new lantern on the town’s string</li></ul></div>'+
+      '<div class="hpk"><div><h4>You get</h4><ul><li>Stars: each one is <b>+2% profit</b> in this town, forever</li><li>Diamonds</li><li>A new lantern on the town’s string</li></ul></div>'+
       '<div><h4>The catch</h4><ul><li>This town’s cash, shops, managers and upgrades start over</li><li>Your first shop and one manager you choose stay</li></ul></div></div>'+
       '<p class="hpp">Tip: close when the stars waiting are worth it, for example when they would add a big part to what you have, or when growth gets slow.</p>')+
-    sec(I('#ffd45c','⭐'),'Stars and perks','<p>Spend stars on perks: a head start, cheaper shops, longer offline time, more lanterns and diamonds.</p><p class="hpp">+ Spending stars does <b>not</b> lower your profit bonus. It counts every star you have ever earned.</p>')+
-    sec(I('#29d9ff','🗺️'),'Towns','<p>Stars open new towns, each with its own food, look and rule:</p><ul class="hpl"><li><b>Tetovo</b>: street rush. Taps fill a meter for double speed.</li><li><b>Venice</b> (5,000 ★): tap gondola deliveries, and enjoy high tide.</li><li><b>Vienna</b> (250,000 ★): one row of shops is busy at a time, plus warmth.</li><li><b>Tokyo</b> (10M ★): tap different shops in a row for combos.</li></ul><p class="hpp">Stars work in every town, and each town keeps its own shops.</p>')+
+    sec(I('#ffd45c','⭐'),'Stars and perks','<p>Spend a town\u2019s stars on perks for that town: a head start, cheaper shops, longer offline time, more lanterns and diamonds.</p><p class="hpp">+ Spending stars does <b>not</b> lower your profit bonus. It counts every star you have ever earned.</p>')+
+    sec(I('#29d9ff','🗺️'),'Towns','<p>Stars open new towns, each with its own food, look and rule:</p><ul class="hpl"><li><b>Tetovo</b>: street rush. Taps fill a meter for double speed.</li><li><b>Venice</b> (5,000 ★ in Tetovo): tap gondola deliveries, and enjoy high tide.</li><li><b>Vienna</b> (25,000 ★ in Venice): one row of shops is busy at a time, plus warmth.</li><li><b>Tokyo</b> (100,000 ★ in Vienna): tap different shops in a row for combos.</li></ul><p class="hpp">Every town is its own game: its own money, stars, perks and shops. Only diamonds are shared.</p>')+
     sec(I('#62c3ff','💎'),'Diamonds and boosts','<p>Diamonds buy profit and speed boosts, time skips, a permanent Lantern Blessing and skins.</p><p class="hpp">Free diamonds: the daily gift (keep your streak), daily goals, golden lanterns, villager requests and short optional ads.</p>')+
     sec(I('#e0362c','🏮'),'Little extras','<ul class="hpl"><li><b>Golden lanterns</b> float over the map. Tap them for a reward.</li><li><b>Villagers</b> sometimes ask for something. Finish it in time for diamonds.</li><li><b>The story</b>, The Lantern Map, unlocks chapter by chapter as you grow.</li></ul>')+
     '<p class="foot">You can replay the step-by-step guide from the Stars tab.</p></div></div>';
